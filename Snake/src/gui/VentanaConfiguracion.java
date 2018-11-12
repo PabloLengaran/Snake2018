@@ -10,6 +10,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.Color;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import data.Musica;
 import javax.swing.border.BevelBorder;
 import javax.swing.JButton;
@@ -28,11 +31,15 @@ import java.awt.Toolkit;
 
 public class VentanaConfiguracion extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame();
 	private JPanel contentPane;
-	private Object[] dificultad = { "Principiante", "Fácil", "Media", "Difícil", "Extremo" };
+	private Object[] dificultad = { "Principiante", "Fï¿½cil", "Media", "Difï¿½cil", "Extremo" };
 	private JComboBox comboBox;
-	private JSlider slider, slider_1, slider_2, slider_3;
+	private JSlider sliderMenu, sliderPartida, sliderEfectos, sliderTodo;
 	private int resultado = 65;
 	private float volumenEfectos;
 	private float volumenPartida;
@@ -105,9 +112,9 @@ public class VentanaConfiguracion extends JFrame {
 		} else if (dificultadAnterior == 100) {
 			comboBox.setSelectedItem("Principiante");
 		} else if (dificultadAnterior == 80) {
-			comboBox.setSelectedItem("Fácil");
+			comboBox.setSelectedItem("Fï¿½cil");
 		} else if (dificultadAnterior == 45) {
-			comboBox.setSelectedItem("Difícil");
+			comboBox.setSelectedItem("Difï¿½cil");
 		} else {
 			comboBox.setSelectedItem("Extremo");
 		}
@@ -118,13 +125,13 @@ public class VentanaConfiguracion extends JFrame {
 				if (itemSeleecionado.equals("Principiante")) {
 					resultado = 100;
 					v.setDificultad(resultado);
-				} else if (itemSeleecionado.equals("Fácil")) {
+				} else if (itemSeleecionado.equals("Fï¿½cil")) {
 					resultado = 80;
 					v.setDificultad(resultado);
 				} else if (itemSeleecionado.equals("Media")) {
 					resultado = 65;
 					v.setDificultad(resultado);
-				} else if (itemSeleecionado.equals("Difícil")) {
+				} else if (itemSeleecionado.equals("Difï¿½cil")) {
 					resultado = 45;
 					v.setDificultad(resultado);
 				} else {
@@ -148,42 +155,51 @@ public class VentanaConfiguracion extends JFrame {
 		lblVolumenDelMen.setFont(new Font("Consolas", Font.PLAIN, 15));
 		panel_7.add(lblVolumenDelMen);
 
-		JCheckBox chckbxSilenciar = new JCheckBox("Silenciar");
-		chckbxSilenciar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chckbxSilenciar.addActionListener(new ActionListener() {
+		JCheckBox chckbxSilenciarMenu = new JCheckBox("Silenciar");
+		chckbxSilenciarMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		chckbxSilenciarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (chckbxSilenciar.isSelected()) {
+				if (chckbxSilenciarMenu.isSelected()) {
 					Musica.click(volumenEfectos);
 					volumenMenu = -80;
-					slider.setValue((int) volumenMenu);
+					sliderMenu.setValue((int) volumenMenu);
 				} else {
 					Musica.click(volumenEfectos);
 					volumenMenu = 0;
-					slider.setValue((int) volumenMenu);
+					sliderMenu.setValue((int) volumenMenu);
 				}
 			}
 		});
-		chckbxSilenciar.setFont(new Font("Consolas", Font.PLAIN, 15));
-		panel_7.add(chckbxSilenciar);
+		chckbxSilenciarMenu.setFont(new Font("Consolas", Font.PLAIN, 15));
+		panel_7.add(chckbxSilenciarMenu);
 
-		slider = new JSlider();
-		slider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		slider.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		slider.setMinorTickSpacing(5);
-		slider.setMajorTickSpacing(20);
-		slider.setPaintTicks(true);
-		// slider.addChangeListener(new ChangeListener() {
-		// public void stateChanged(ChangeEvent arg0) {
-		// volumenMenu = slider.getValue();
-		// }
-		// });
-		slider.setMinimum(-80);
-		slider.setMaximum(0);
-		panel_7.add(slider);
+		sliderMenu = new JSlider();
+		sliderMenu.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				System.out.println("Valor del slider menu: " + sliderMenu.getValue());
+				volumenMenu = sliderMenu.getValue();
+				System.out.println("Valor del volumen menu: " + volumenMenu);
+				
+				//Comprobamos si el volumen estÃ¡ al minimo y en caso de ser asi seleccionamos el checkbox.
+				if (volumenMenu == -80) {
+					chckbxSilenciarMenu.setSelected(true);
+				} else {
+					chckbxSilenciarMenu.setSelected(false);
+				}
+			}
+		});
+		sliderMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		sliderMenu.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		sliderMenu.setMinorTickSpacing(5);
+		sliderMenu.setMajorTickSpacing(20);
+		sliderMenu.setPaintTicks(true);
+		sliderMenu.setMinimum(-80);
+		sliderMenu.setMaximum(0);
+		panel_7.add(sliderMenu);
 
 		if (volumenMAnterior == -80) {
-			chckbxSilenciar.setSelected(true);
-			slider.setValue((int) volumenMAnterior);
+			chckbxSilenciarMenu.setSelected(true);
+			sliderMenu.setValue((int) volumenMAnterior);
 		}
 
 		JPanel panel_8 = new JPanel();
@@ -194,40 +210,49 @@ public class VentanaConfiguracion extends JFrame {
 		lblVolumenDePartida.setFont(new Font("Consolas", Font.PLAIN, 15));
 		panel_8.add(lblVolumenDePartida);
 
-		JCheckBox chckbxSilenciar_1 = new JCheckBox("Silenciar");
-		chckbxSilenciar_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chckbxSilenciar_1.addActionListener(new ActionListener() {
+		JCheckBox chckbxSilenciarPartida = new JCheckBox("Silenciar");
+		chckbxSilenciarPartida.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		chckbxSilenciarPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (chckbxSilenciar_1.isSelected()) {
+				if (chckbxSilenciarPartida.isSelected()) {
 					Musica.click(volumenEfectos);
 					volumenPartida = -80;
-					slider_1.setValue((int) volumenPartida);
+					sliderPartida.setValue((int) volumenPartida);
 				} else {
 					Musica.click(volumenEfectos);
 					volumenPartida = 0;
-					slider_1.setValue((int) volumenPartida);
+					sliderPartida.setValue((int) volumenPartida);
 				}
 			}
 		});
-		chckbxSilenciar_1.setFont(new Font("Consolas", Font.PLAIN, 15));
-		panel_8.add(chckbxSilenciar_1);
+		chckbxSilenciarPartida.setFont(new Font("Consolas", Font.PLAIN, 15));
+		panel_8.add(chckbxSilenciarPartida);
 
-		slider_1 = new JSlider();
-		// slider_1.addChangeListener(new ChangeListener() {
-		// public void stateChanged(ChangeEvent e) {
-		// volumenPartida = slider_1.getValue();
-		// }
-		// });
-		slider_1.setMinorTickSpacing(5);
-		slider_1.setMajorTickSpacing(20);
-		slider_1.setPaintTicks(true);
-		slider_1.setMinimum(-80);
-		slider_1.setMaximum(0);
-		panel_8.add(slider_1);
+		sliderPartida = new JSlider();
+		sliderPartida.addChangeListener(new ChangeListener() {
+			 public void stateChanged(ChangeEvent e) {
+				 System.out.println("valor del slider de partida: " + sliderPartida.getValue());
+				 volumenPartida = sliderPartida.getValue();
+				 System.out.println("Valor del volumen de Partida: " + volumenPartida);
+				 
+				//Comprobamos si el volumen estÃ¡ al minimo y en caso de ser asi seleccionamos el checkbox.
+				 if (volumenPartida == -80) {
+					chckbxSilenciarPartida.setSelected(true);
+				} else {
+					chckbxSilenciarPartida.setSelected(false);
+				}
+			 }
+		});
+		sliderPartida.setMinorTickSpacing(5);
+		sliderPartida.setMajorTickSpacing(20);
+		sliderPartida.setPaintTicks(true);
+		sliderPartida.setMinimum(-80);
+		sliderPartida.setMaximum(0);
+		panel_8.add(sliderPartida);
 
 		if (volumenPAnterior == -80) {
-			chckbxSilenciar_1.setSelected(true);
-			slider_1.setValue((int) volumenPAnterior);
+			chckbxSilenciarPartida.setSelected(true);
+			sliderPartida.setValue((int) volumenPAnterior);
 		}
 
 		JPanel panel_9 = new JPanel();
@@ -238,44 +263,49 @@ public class VentanaConfiguracion extends JFrame {
 		lblVolumenDeEfectos.setFont(new Font("Consolas", Font.PLAIN, 15));
 		panel_9.add(lblVolumenDeEfectos);
 
-		JCheckBox chckbxSilenciar_2 = new JCheckBox("Silenciar");
-		chckbxSilenciar_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chckbxSilenciar_2.addActionListener(new ActionListener() {
+		JCheckBox chckbxSilenciarEfectos = new JCheckBox("Silenciar");
+		chckbxSilenciarEfectos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		chckbxSilenciarEfectos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (chckbxSilenciar_2.isSelected()) {
+				if (chckbxSilenciarEfectos.isSelected()) {
 					Musica.click(volumenEfectos);
 					volumenEfectos = -80;
-					slider_2.setValue((int) volumenEfectos);
+					sliderEfectos.setValue((int) volumenEfectos);
 				} else {
 					volumenEfectos = 0;
-					slider_2.setValue((int) volumenEfectos);
+					sliderEfectos.setValue((int) volumenEfectos);
 				}
 			}
 		});
-		chckbxSilenciar_2.setFont(new Font("Consolas", Font.PLAIN, 15));
-		panel_9.add(chckbxSilenciar_2);
+		chckbxSilenciarEfectos.setFont(new Font("Consolas", Font.PLAIN, 15));
+		panel_9.add(chckbxSilenciarEfectos);
 
-		slider_2 = new JSlider();
-		// slider_2.addChangeListener(new ChangeListener() {
-		// public void stateChanged(ChangeEvent e) {
-		// if(slider_2.getValue()!= 0) {
-		// volumenEfectos = slider.getValue();
-		// } else {
-		//
-		// }
-		// }
-		// });
-		slider_2.setMinorTickSpacing(5);
-		slider_2.setMajorTickSpacing(20);
-		slider_2.setPaintTicks(true);
-		slider_2.setMinimum(-80);
-		slider_2.setMaximum(0);
-		panel_9.add(slider_2);
+		sliderEfectos = new JSlider();
+		sliderEfectos.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				System.out.println("valor del slider efectos: " + sliderEfectos.getValue());
+				volumenEfectos = sliderEfectos.getValue();
+				System.out.println("valor del volumen efectos: " + volumenEfectos);
+				
+				//Comprobamos si el volumen estÃ¡ al minimo y en caso de ser asi seleccionamos el checkbox.
+				if (volumenEfectos == -80) {
+					chckbxSilenciarEfectos.setSelected(true);
+				} else {
+					chckbxSilenciarEfectos.setSelected(false);
+				}
+			}
+		});
+		sliderEfectos.setMinorTickSpacing(5);
+		sliderEfectos.setMajorTickSpacing(20);
+		sliderEfectos.setPaintTicks(true);
+		sliderEfectos.setMinimum(-80);
+		sliderEfectos.setMaximum(0);
+		panel_9.add(sliderEfectos);
 
 		if (volumenEAnterior == -80) {
-			chckbxSilenciar_2.setSelected(true);
-			slider_2.setValue((int) volumenEAnterior);
+			chckbxSilenciarEfectos.setSelected(true);
+			sliderEfectos.setValue((int) volumenEAnterior);
 		}
 
 		JPanel panel_6 = new JPanel();
@@ -286,94 +316,98 @@ public class VentanaConfiguracion extends JFrame {
 		lblVolumenGeneral.setFont(new Font("Consolas", Font.PLAIN, 15));
 		panel_6.add(lblVolumenGeneral);
 
-		JCheckBox chckbxSilenciar_3 = new JCheckBox("Silenciar");
-		chckbxSilenciar_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chckbxSilenciar_3.addActionListener(new ActionListener() {
+		JCheckBox chckbxSilenciarTodo = new JCheckBox("Silenciar");
+		chckbxSilenciarTodo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		chckbxSilenciarTodo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (chckbxSilenciar_3.isSelected()) {
+				if (chckbxSilenciarTodo.isSelected()) {
 					Musica.click(volumenEfectos);
-					slider_3.setValue(-80);
+					sliderTodo.setValue(-80);
 					volumenEfectos = -80;
-					slider_2.setValue((int) volumenEfectos);
-					chckbxSilenciar_2.setSelected(true);
-					chckbxSilenciar_2.setEnabled(false);
-					slider_2.setEnabled(false);
+					sliderEfectos.setValue((int) volumenEfectos);
+					chckbxSilenciarEfectos.setSelected(true);
+					chckbxSilenciarEfectos.setEnabled(false);
+					sliderEfectos.setEnabled(false);
 					volumenMenu = -80;
-					slider.setValue((int) volumenMenu);
-					chckbxSilenciar.setSelected(true);
-					chckbxSilenciar.setEnabled(false);
-					slider.setEnabled(false);
+					sliderMenu.setValue((int) volumenMenu);
+					chckbxSilenciarMenu.setSelected(true);
+					chckbxSilenciarMenu.setEnabled(false);
+					sliderMenu.setEnabled(false);
 					volumenPartida = -80;
-					slider_1.setValue((int) volumenPartida);
-					chckbxSilenciar_1.setSelected(true);
-					chckbxSilenciar_1.setEnabled(false);
-					slider_1.setEnabled(false);
-				} else if (!chckbxSilenciar_3.isSelected()) {
+					sliderPartida.setValue((int) volumenPartida);
+					chckbxSilenciarPartida.setSelected(true);
+					chckbxSilenciarPartida.setEnabled(false);
+					sliderPartida.setEnabled(false);
+					
+				} else if (!chckbxSilenciarTodo.isSelected()) {
 					Musica.click(volumenEfectos);
-					slider_3.setValue(0);
+					sliderTodo.setValue(0);
 					volumenEfectos = 0;
-					slider_2.setValue((int) volumenEfectos);
-					chckbxSilenciar_2.setSelected(false);
-					chckbxSilenciar_2.setEnabled(true);
-					slider_2.setEnabled(true);
+					sliderEfectos.setValue((int) volumenEfectos);
+					chckbxSilenciarEfectos.setSelected(false);
+					chckbxSilenciarEfectos.setEnabled(true);
+					sliderEfectos.setEnabled(true);
 					volumenMenu = 0;
-					slider.setValue((int) volumenMenu);
-					chckbxSilenciar.setSelected(false);
-					chckbxSilenciar.setEnabled(true);
-					slider.setEnabled(true);
+					sliderMenu.setValue((int) volumenMenu);
+					chckbxSilenciarMenu.setSelected(false);
+					chckbxSilenciarMenu.setEnabled(true);
+					sliderMenu.setEnabled(true);
 					volumenPartida = 0;
-					slider_1.setValue((int) volumenPartida);
-					chckbxSilenciar_1.setSelected(false);
-					chckbxSilenciar_1.setEnabled(true);
-					slider_1.setEnabled(true);
+					sliderPartida.setValue((int) volumenPartida);
+					chckbxSilenciarPartida.setSelected(false);
+					chckbxSilenciarPartida.setEnabled(true);
+					sliderPartida.setEnabled(true);
 				}
+				
+				
 			}
 		});
-		chckbxSilenciar_3.setFont(new Font("Consolas", Font.PLAIN, 15));
-		panel_6.add(chckbxSilenciar_3);
+		chckbxSilenciarTodo.setFont(new Font("Consolas", Font.PLAIN, 15));
+		panel_6.add(chckbxSilenciarTodo);
 
-		slider_3 = new JSlider();
-		// slider_3.addChangeListener(new ChangeListener() {
-		// public void stateChanged(ChangeEvent e) {
-		// if (slider_3.getValue() != 0) {
-		// volumenEfectos = slider_3.getValue();
-		// slider_2.setValue(slider_3.getValue());
-		// slider_2.setEnabled(false);
-		// volumenMenu = slider_3.getValue();
-		// slider_1.setValue(slider_3.getValue());
-		// slider_1.setEnabled(false);
-		// volumenPartida = slider_3.getValue();
-		// slider.setValue(slider_3.getValue());
-		// slider.setEnabled(false);
-		// } else {
-		// slider.setEnabled(true);
-		// slider.setValue(slider_3.getValue());
-		// slider_1.setEnabled(true);
-		// slider_1.setValue(slider_3.getValue());
-		// slider_2.setEnabled(true);
-		// slider_2.setValue(slider_3.getValue());
-		// }
-		// }
-		// });
-		slider_3.setMinorTickSpacing(5);
-		slider_3.setMajorTickSpacing(20);
-		slider_3.setPaintTicks(true);
-		slider_3.setMinimum(-80);
-		slider_3.setMaximum(0);
-		panel_6.add(slider_3);
+		sliderTodo = new JSlider();
+		sliderTodo.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (sliderTodo.getValue() != 0) {
+					volumenEfectos = sliderTodo.getValue();
+					sliderEfectos.setValue(sliderTodo.getValue());
+					sliderPartida.setValue(sliderTodo.getValue());
+					volumenPartida = sliderTodo.getValue();
+					volumenMenu = sliderTodo.getValue();
+					sliderMenu.setValue(sliderTodo.getValue());
+				} else {
+					sliderMenu.setValue(sliderTodo.getValue());
+					sliderPartida.setValue(sliderTodo.getValue());
+					sliderEfectos.setValue(sliderTodo.getValue());
+				}
+				
+				//Comprobamos si el volumen estÃ¡ al minimo y en caso de ser asi seleccionamos el checkbox.
+				if (sliderTodo.getValue() == -80) {
+					chckbxSilenciarTodo.setSelected(true);
+				} else {
+					chckbxSilenciarTodo.setSelected(false);
+				}
+			}
+		 });
+		sliderTodo.setMinorTickSpacing(5);
+		sliderTodo.setMajorTickSpacing(20);
+		sliderTodo.setPaintTicks(true);
+		sliderTodo.setMinimum(-80);
+		sliderTodo.setMaximum(0);
+		panel_6.add(sliderTodo);
 
 		if (volumenPAnterior == -80 && volumenMAnterior == -80 && volumenEAnterior == -80) {
-			chckbxSilenciar_3.setSelected(true);
-			slider_3.setValue(-80);
-			chckbxSilenciar.setSelected(true);
-			chckbxSilenciar.setEnabled(false);
-			slider.setValue((int) volumenMAnterior);
-			chckbxSilenciar_1.setSelected(true);
-			chckbxSilenciar_1.setEnabled(false);
-			slider_1.setValue((int) volumenPAnterior);
-			chckbxSilenciar_2.setSelected(true);
-			chckbxSilenciar_2.setEnabled(false);
-			slider_2.setValue((int) volumenEAnterior);
+			chckbxSilenciarTodo.setSelected(true);
+			sliderTodo.setValue(-80);
+			chckbxSilenciarMenu.setSelected(true);
+			chckbxSilenciarMenu.setEnabled(false);
+			sliderMenu.setValue((int) volumenMAnterior);
+			chckbxSilenciarPartida.setSelected(true);
+			chckbxSilenciarPartida.setEnabled(false);
+			sliderPartida.setValue((int) volumenPAnterior);
+			chckbxSilenciarEfectos.setSelected(true);
+			chckbxSilenciarEfectos.setEnabled(false);
+			sliderEfectos.setValue((int) volumenEAnterior);
 		}
 
 		JPanel panel_3 = new JPanel();
@@ -443,7 +477,7 @@ public class VentanaConfiguracion extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCancelar.setBackground(SystemColor.textHighlight);
-		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setForeground(Color.BLACK);
 		btnCancelar.setFont(new Font("Consolas", Font.PLAIN, 15));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -456,13 +490,13 @@ public class VentanaConfiguracion extends JFrame {
 
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnGuardar.setForeground(Color.WHITE);
+		btnGuardar.setForeground(Color.BLACK);
 		btnGuardar.setBackground(SystemColor.textHighlight);
 		btnGuardar.setFont(new Font("Consolas", Font.PLAIN, 15));
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Musica.clickBoton(volumenEfectos);
-				v.main(usuario, resultado, volumenEfectos, volumenMenu, volumenPartida,fondo);
+				v.main(usuario, resultado, volumenEfectos, volumenMenu, volumenPartida, fondo);
 				dispose();
 			}
 		});

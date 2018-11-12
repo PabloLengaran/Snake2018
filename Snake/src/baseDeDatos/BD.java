@@ -1,126 +1,266 @@
 package baseDeDatos;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.logging.*;
 
+import javax.swing.JTextField;
+
+/** Clase de gestiï¿½n de base de datos del sistema de analiticas
+ * @author andoni.eguiluz @ ingenieria.deusto.es
+ */
 public class BD {
 
-	private Connection con;
-	private static Statement stmt;
-
-	/**
-	 * Metodo que crea una sentencia para acceder a la base de datos
+	private static Exception lastError = null;  // Informaciï¿½n de ï¿½ltimo error SQL ocurrido
+	// TODO CAMBIAR CONSTANTES
+	private static final String NOMBRETABLA = "Usuarios";
+	private static final String COLUMNAS_TABLA = " (nombre string, contrasenia string, puntuacion integer)";
+	/** Inicializa una BD SQLITE y devuelve una conexiï¿½n con ella
+	 * @param nombreBD	Nombre de fichero de la base de datos
+	 * @return	Conexiï¿½n con la base de datos indicada. Si hay algï¿½n error, se devuelve null
 	 */
-	public void crearSentencia() {
+	public static Connection initBD( String nombreBD ) {
 		try {
-			stmt = con.createStatement();
+		    Class.forName("org.sqlite.JDBC");
+		    Connection con = DriverManager.getConnection("jdbc:sqlite:" + nombreBD );
+			log( Level.INFO, "Conectada base de datos " + nombreBD, null );
+		    return con;
+		} catch (ClassNotFoundException | SQLException e) {
+			lastError = e;
+			log( Level.SEVERE, "Error en conexiï¿½n de base de datos " + nombreBD, e );
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/** Devuelve statement para usar la base de datos
+	 * @param con	Conexiï¿½n ya creada y abierta a la base de datos
+	 * @return	sentencia de trabajo si se crea correctamente, null si hay cualquier error
+	 */
+	public static Statement usarBD( Connection con ) {
+		try {
+			Statement statement = con.createStatement();
+			statement.setQueryTimeout(30);  // poner timeout 30 msg
+			return statement;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			lastError = e;
+			log( Level.SEVERE, "Error en uso de base de datos", e );
 			e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * Metodo que permite conectarse a la base de datos
-	 */
-
-	public void conectar() {
-		try {
-			Class.forName("org.sqlite.JDBC");
-			con = DriverManager.getConnection("jdbc:sqlite:BaseDeDatos.db");
-			crearSentencia();
-		} catch (Exception e) {
-			System.out.println("No se ha podido conectar a la base de datos");
-			e.printStackTrace();
+			return null;
 		}
 	}
-
-	/**
-	 * Metodo que cierra una sentencia
+	
+	/** Crea las tablas de la base de datos. Si ya existen, las deja tal cual
+	 * @param con	Conexiï¿½n ya creada y abierta a la base de datos
+	 * @return	sentencia de trabajo si se crea correctamente, null si hay cualquier error
 	 */
-	public void cerrarSentencia() {
+	public static Statement usarCrearTablasBD( Connection con ) {
 		try {
-			stmt.close();
+			Statement statement = con.createStatement();
+			statement.setQueryTimeout(30);  // poner timeout 30 msg
+			try {
+				statement.executeUpdate("create table "+NOMBRETABLA+COLUMNAS_TABLA);
+			} catch (SQLException e) {} // Tabla ya existe. Nada que hacer
+			log( Level.INFO, "Creada base de datos", null );
+			return statement;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			lastError = e;
+			log( Level.SEVERE, "Error en creaciï¿½n de base de datos", e );
 			e.printStackTrace();
+			return null;
 		}
 	}
-
-	/**
-	 * Metodo que permite desconectarse de la base de datos
+	
+	/** Reinicia en blanco las tablas de la base de datos. 
+	 * UTILIZAR ESTE Mï¿½TODO CON PRECAUCIï¿½N. Borra todos los datos que hubiera ya en las tablas
+	 * @param con	Conexiï¿½n ya creada y abierta a la base de datos
+	 * @return	sentencia de trabajo si se borra correctamente, null si hay cualquier error
 	 */
-	public void desconectar() {
+	public static Statement reiniciarBD( Connection con ) {
 		try {
-			cerrarSentencia();
-			con.close();
+			Statement statement = con.createStatement();
+			statement.setQueryTimeout(30);  // poner timeout 30 msg
+			statement.executeUpdate("drop table if exists "+NOMBRETABLA);
+			log( Level.INFO, "Reiniciada base de datos", null );
+			return usarCrearTablasBD( con );
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			log( Level.SEVERE, "Error en reinicio de base de datos", e );
+			lastError = e;
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/** Cierra la base de datos abierta
+	 * @param con	Conexiï¿½n abierta de la BD
+	 * @param st	Sentencia abierta de la BD
+	 */
+	public static void cerrarBD( Connection con, Statement st ) {
+		try {
+			if (st!=null) st.close();
+			if (con!=null) con.close();
+			log( Level.INFO, "Cierre de base de datos", null );
+		} catch (SQLException e) {
+			lastError = e;
+			log( Level.SEVERE, "Error en cierre de base de datos", e );
 			e.printStackTrace();
 		}
 	}
-
-	public BD() {
-		conectar();
-	}
-
-	/* A partir de aquí hacemos las consultas específicas de cada proyecto */
-
-	/**
-	 * 
-	 * @param nom: Nombre introducido por el usuario
-	 * @param con: Contraseña introducida por el usuario
-	 * @return : 
-	 * 			0 - Si no existe el usuario
-	 * 			1 - Si sí existe el usuario pero la contraseña no es correcta
-	 * 			2 - Si el nombre de usuario es correcto y la contraseña también
+	
+	/** Devuelve la informaciï¿½n de excepciï¿½n del ï¿½ltimo error producido por cualquiera 
+	 * de los mï¿½todos de gestiï¿½n de base de datos
 	 */
-	public int existeUsuario(String nom, String con) {
-
-		String query = "SELECT * FROM Usuario WHERE nombre='" + nom + "'";
-		ResultSet rs = null;
-		int resul = 0;
+	public static Exception getLastError() {
+		return lastError;
+	}
+	
+	// TODO CAMBIAR SELECT, UPDATE, INSERT Y DELETE
+	
+	
+	/** Aï¿½ade un registro a la tabla abierta de BD, usando la sentencia INSERT de SQL
+	 * @param st	Sentencia ya abierta de Base de Datos (con la estructura de tabla correspondiente)
+	 * @param codigo	Cï¿½digo a aï¿½adir a la BD (en nueva fila)
+	 * @param contador	contador a aï¿½adir a esa nueva fila de la BD
+	 * @return	true si la inserciï¿½n es correcta, false en caso contrario
+	 */
+	public static boolean usuariosInsert( Statement st, String nombre, String contrasenia ,int puntuacion ) {
+		String sentSQL = "";
 		try {
-			rs = stmt.executeQuery(query);
-			if (rs.next()) { // Aquí estamos comprobando si la SELECT ha
-				// devuelto alguna fila
-				String n = rs.getString("nombre");
-				String c = rs.getString("contrasenia");
-				if (!n.equals(nom))
-					resul = 0;
-				else if (!c.equals(con))
-					resul = 1;
-				else
-					resul = 2;
+			sentSQL = "insert into usuarios values('" + secu(nombre) + "', " + contrasenia + "', " + puntuacion + ")";
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD fila aï¿½adida " + val + " fila\t" + sentSQL, null );
+			if (val!=1) {  // Se tiene que aï¿½adir 1 - error si no
+				log( Level.SEVERE, "Error en insert de BD\t" + sentSQL, null );
+				return false;  
 			}
+			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
 			e.printStackTrace();
+			return false;
 		}
+	}
+
+	/** Realiza una consulta a la tabla abierta de la BD, usando la sentencia SELECT de SQL
+	 * @param st	Sentencia ya abierta de Base de Datos (con la estructura de tabla correspondiente a la analitica)
+	 * @param codigo	Cï¿½digo a buscar en la tabla
+	 * @return	contador cargado desde la base de datos para ese cï¿½digo, Integer.MAX_VALUE si hay cualquier error
+	 */
+	public static int analiticaSelect( Statement st, String txtNombreUsuario ) {
+		String sentSQL = "";
 		try {
+			int ret = Integer.MAX_VALUE;
+			sentSQL = "select * from analitica where codigo='" + txtNombreUsuario + "'";
+			ResultSet rs = st.executeQuery( sentSQL );
+			if (rs.next()) {
+				ret = rs.getInt( "contador" );
+			}
 			rs.close();
+			log( Level.INFO, "BD\t" + sentSQL, null );
+			return ret;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
 			e.printStackTrace();
+			return Integer.MAX_VALUE;
 		}
-		return resul;
 	}
 
-	public void registrarUsuario(String nom, String con) {
-		String query = "INSERT INTO Usuario(nombre,contrasenia) VALUES('" + nom + "','" + con + "')";
-		// No podemos REsultSet pq una INSERT no devuelve filas, solo inserta en
-		// la tabla
+	/** Modifica una analï¿½tica en la tabla abierta de BD, usando la sentencia UPDATE de SQL
+	 * @param st	Sentencia ya abierta de Base de Datos (con la estructura de tabla correspondiente a la analï¿½tica)
+	 * @param codigo	Cï¿½digo a modificar en la base de datos
+	 * @param contador	Contador a modificar de ese cï¿½digo
+	 * @return	true si la inserciï¿½n es correcta, false en caso contrario
+	 */
+	public static boolean analiticaUpdate( Statement st, String codigo, int contador ) {
+		String sentSQL = "";
 		try {
-			stmt.executeUpdate(query);
+			sentSQL = "update analitica set contador=" + contador + " where codigo='" + codigo + "'";
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD modificada " + val + " fila\t" + sentSQL, null );
+			if (val!=1) {  // Se tiene que modificar 1 - error si no
+				log( Level.SEVERE, "Error en update de BD\t" + sentSQL, null );
+				return false;  
+			}
+			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
 			e.printStackTrace();
+			return false;
 		}
-		;
 	}
 
+	/** Borrar una analï¿½tica de la tabla abierta de BD, usando la sentencia DELETE de SQL
+	 * @param st	Sentencia ya abierta de Base de Datos (con la estructura de tabla correspondiente a la analï¿½tica)
+	 * @param codigo	Cï¿½digo de analï¿½tica a borrar de la base de datos
+	 * @return	true si el borrado es correcto, false en caso contrario
+	 */
+	public static boolean analiticaDelete( Statement st, String codigo ) {
+		String sentSQL = "";
+		try {
+			sentSQL = "delete from analitica where codigo='" + secu(codigo) + "'";
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD borrada " + val + " fila\t" + sentSQL, null );
+			return (val==1);
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	
+	/////////////////////////////////////////////////////////////////////
+	//                      Mï¿½todos privados                           //
+	/////////////////////////////////////////////////////////////////////
+
+	// Devuelve el string "securizado" para volcarlo en SQL
+	// (Implementaciï¿½n 1) Sustituye ' por '' y quita saltos de lï¿½nea
+	// (Implementaciï¿½n 2) Mantiene solo los caracteres seguros en espaï¿½ol
+	private static String secu( String string ) {
+		// Implementaciï¿½n (1)
+		// return string.replaceAll( "'",  "''" ).replaceAll( "\\n", "" );
+		// Implementaciï¿½n (2)
+		StringBuffer ret = new StringBuffer();
+		for (char c : string.toCharArray()) {
+			if ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.,:;-_(){}[]-+*=<>'\"ï¿½?ï¿½!&%$@#/\\0123456789".indexOf(c)>=0) ret.append(c);
+		}
+		return ret.toString();
+	}
+	
+
+	/////////////////////////////////////////////////////////////////////
+	//                      Logging                                    //
+	/////////////////////////////////////////////////////////////////////
+	
+	private static Logger logger = null;
+	// Mï¿½todo pï¿½blico para asignar un logger externo
+	/** Asigna un logger ya creado para que se haga log de las operaciones de base de datos
+	 * @param logger	Logger ya creado
+	 */
+	public static void setLogger( Logger logger ) {
+		BD.logger = logger;
+	}
+	// Mï¿½todo local para loggear (si no se asigna un logger externo, se asigna uno local)
+	private static void log( Level level, String msg, Throwable excepcion ) {
+		if (logger==null) {  // Logger por defecto local:
+			logger = Logger.getLogger( BD.class.getName() );  // Nombre del logger - el de la clase
+			logger.setLevel( Level.ALL );  // Loguea todos los niveles
+			try {
+				// logger.addHandler( new FileHandler( "bd-" + System.currentTimeMillis() + ".log.xml" ) );  // Y saca el log a fichero xml
+				logger.addHandler( new FileHandler( "bd.log.xml", true ) );  // Y saca el log a fichero xml
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "No se pudo crear fichero de log", e );
+			}
+		}
+		if (excepcion==null)
+			logger.log( level, msg );
+		else
+			logger.log( level, msg, excepcion );
+	}
+	
+	
+	
 }

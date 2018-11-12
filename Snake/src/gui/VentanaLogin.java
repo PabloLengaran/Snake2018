@@ -5,7 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import baseDeDatos.BD;
+import baseDeDatos.BD1;
 import contenedores.GestionFicheros;
 import gui.VentanaMenu;
 import javax.swing.JLabel;
@@ -17,6 +19,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +40,9 @@ public class VentanaLogin extends JFrame {
 	private JPasswordField passwordField;
 	public BD bd; // el atributo BD (public) para poder usarlo en todo el proyecto
 	static VentanaLogin frame = new VentanaLogin();
+	
+	private Connection connection;
+	private Statement statement;
 
 	/**
 	 * Launch the application.
@@ -69,10 +76,14 @@ public class VentanaLogin extends JFrame {
 		bd = new BD(); // Dentro del constructor se conecta a la base de datos y
 		// crea la sentencia
 		/*
-		 * hay que crear manejador de fichero para indicar a qué fichero se
-		 * mandarán los logs
+		 * hay que crear manejador de fichero para indicar a quï¿½ fichero se
+		 * mandarï¿½n los logs
 		 */
+		connection = BD.initBD("Usuarios");
+		statement = BD.usarBD(connection);
 		Handler fileHandler = null;
+		 
+		
 		try {
 			fileHandler = new FileHandler("./prueba.log", true);
 		} catch (SecurityException e) {
@@ -116,35 +127,35 @@ public class VentanaLogin extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String nom = txtNombreUsuario.getText();
-				String con = passwordField.getText();
-				if (nom.equals("")) {
-					JOptionPane.showMessageDialog(null, "El campo nombre no puede estar vacío");
-					logger.log(Level.INFO, "Ha dejado el campo nombre vacío");
-				} else if (con.equals("")) {
-					JOptionPane.showMessageDialog(null, "El campo contraseña no puede estar vacío", "ERROR!!",
+				String nombreUsuario = txtNombreUsuario.getText();
+				String contraseniaUsuario = new String(passwordField.getPassword());
+				if (nombreUsuario.equals("")) {
+					JOptionPane.showMessageDialog(null, "El campo nombre no puede estar vacï¿½o");
+					logger.log(Level.INFO, "Ha dejado el campo nombre vacï¿½o");
+				} else if (contraseniaUsuario.equals("")) {
+					JOptionPane.showMessageDialog(null, "El campo contraseï¿½a no puede estar vacï¿½o", "ERROR!!",
 							JOptionPane.ERROR_MESSAGE);
-					logger.log(Level.INFO, "Ha dejado el campo contraseña vacío");
+					logger.log(Level.INFO, "Ha dejado el campo contraseï¿½a vacï¿½o");
 				} else {
-					int resul = bd.existeUsuario(nom, con);
+					int resul = bd.analiticaSelect(statement, nombreUsuario);
 					if (resul == 0) {
-						String resp = JOptionPane.showInputDialog("No estás registrado. ¿Quieres registrarte? (S/N)");
+						String resp = JOptionPane.showInputDialog("No estï¿½s registrado. ï¿½Quieres registrarte? (S/N)");
 						if (resp.equalsIgnoreCase("S")) {
-							bd.registrarUsuario(nom, con);
-							JOptionPane.showMessageDialog(null, "Usuario registrado con éxito", "OK",
+							bd.usuariosInsert(statement, nombreUsuario, contraseniaUsuario, 0);
+							JOptionPane.showMessageDialog(null, "Usuario registrado con ï¿½xito", "OK",
 									JOptionPane.INFORMATION_MESSAGE);
 							vaciarCampos();
 						} else {
 							JOptionPane.showMessageDialog(null, "Hasta otra!!");
 						}
 					} else if (resul == 1) {
-						JOptionPane.showMessageDialog(null, "La contraseña no es correcta!!");
-						logger.log(Level.SEVERE, "Se ha equivocado en la contraseña");
+						JOptionPane.showMessageDialog(null, "La contraseï¿½a no es correcta!!");
+						logger.log(Level.SEVERE, "Se ha equivocado en la contraseï¿½a");
 					} else {
 						JOptionPane.showMessageDialog(null, "BIENVENIDO");
 						v.dispose();
-						VentanaMenu v = new VentanaMenu(nom,65,0,0,0,"");
-						v.main(nom,65,0,0,0,"");
+						VentanaMenu v = new VentanaMenu(nombreUsuario,65,0,0,0,"");
+						v.main(nombreUsuario,65,0,0,0,"");
 
 					}
 
@@ -193,5 +204,7 @@ public class VentanaLogin extends JFrame {
 		// fecha
 		Date d = new Date(milis);
 		lblFecha.setText("Fecha: " + df.format(d));
+		
+		
 	}
 }
