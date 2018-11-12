@@ -45,6 +45,7 @@ public class VentanaConfiguracion extends JFrame {
 	private float volumenPartida;
 	private float volumenMenu;
 	private String fondo;
+	
 
 	/**
 	 * Launch the application.
