@@ -285,8 +285,10 @@ public class VentanaConfiguracion extends JFrame {
 		sliderEfectos = new JSlider();
 		sliderEfectos.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				
 				System.out.println("valor del slider efectos: " + sliderEfectos.getValue());
 				volumenEfectos = sliderEfectos.getValue();
+				
 				System.out.println("valor del volumen efectos: " + volumenEfectos);
 				
 				//Comprobamos si el volumen está al minimo y en caso de ser asi seleccionamos el checkbox.
@@ -327,19 +329,12 @@ public class VentanaConfiguracion extends JFrame {
 					volumenEfectos = -80;
 					sliderEfectos.setValue((int) volumenEfectos);
 					chckbxSilenciarEfectos.setSelected(true);
-					chckbxSilenciarEfectos.setEnabled(false);
-					sliderEfectos.setEnabled(false);
 					volumenMenu = -80;
 					sliderMenu.setValue((int) volumenMenu);
 					chckbxSilenciarMenu.setSelected(true);
-					chckbxSilenciarMenu.setEnabled(false);
-					sliderMenu.setEnabled(false);
 					volumenPartida = -80;
 					sliderPartida.setValue((int) volumenPartida);
 					chckbxSilenciarPartida.setSelected(true);
-					chckbxSilenciarPartida.setEnabled(false);
-					sliderPartida.setEnabled(false);
-					
 				} else if (!chckbxSilenciarTodo.isSelected()) {
 					Musica.click(volumenEfectos);
 					sliderTodo.setValue(0);
@@ -397,19 +392,7 @@ public class VentanaConfiguracion extends JFrame {
 		sliderTodo.setMaximum(0);
 		panel_6.add(sliderTodo);
 
-		if (volumenPAnterior == -80 && volumenMAnterior == -80 && volumenEAnterior == -80) {
-			chckbxSilenciarTodo.setSelected(true);
-			sliderTodo.setValue(-80);
-			chckbxSilenciarMenu.setSelected(true);
-			chckbxSilenciarMenu.setEnabled(false);
-			sliderMenu.setValue((int) volumenMAnterior);
-			chckbxSilenciarPartida.setSelected(true);
-			chckbxSilenciarPartida.setEnabled(false);
-			sliderPartida.setValue((int) volumenPAnterior);
-			chckbxSilenciarEfectos.setSelected(true);
-			chckbxSilenciarEfectos.setEnabled(false);
-			sliderEfectos.setValue((int) volumenEAnterior);
-		}
+		
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));

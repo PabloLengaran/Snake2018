@@ -5,10 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import baseDeDatos.BD;
-import baseDeDatos.BD1;
-import contenedores.GestionFicheros;
+import data.Usuario;
 import gui.VentanaMenu;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,10 +33,13 @@ import java.awt.Toolkit;
 
 public class VentanaLogin extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtNombreUsuario;
 	private JPasswordField passwordField;
-	public BD bd; // el atributo BD (public) para poder usarlo en todo el proyecto
 	static VentanaLogin frame = new VentanaLogin();
 	
 	private Connection connection;
@@ -73,14 +74,13 @@ public class VentanaLogin extends JFrame {
 	public VentanaLogin() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLogin.class.getResource("/recursos/SnakeIcon.png")));
 
-		bd = new BD(); // Dentro del constructor se conecta a la base de datos y
 		// crea la sentencia
 		/*
 		 * hay que crear manejador de fichero para indicar a qu� fichero se
 		 * mandar�n los logs
 		 */
 		connection = BD.initBD("Usuarios");
-		statement = BD.usarBD(connection);
+		statement = BD.usarCrearTablasBD(connection);
 		Handler fileHandler = null;
 		 
 		
@@ -137,25 +137,32 @@ public class VentanaLogin extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 					logger.log(Level.INFO, "Ha dejado el campo contrase�a vac�o");
 				} else {
-					int resul = bd.analiticaSelect(statement, nombreUsuario);
-					if (resul == 0) {
+					Usuario user = BD.usuarioSelect(statement, nombreUsuario);
+					if (user == null) {
 						String resp = JOptionPane.showInputDialog("No est�s registrado. �Quieres registrarte? (S/N)");
 						if (resp.equalsIgnoreCase("S")) {
-							bd.usuariosInsert(statement, nombreUsuario, contraseniaUsuario, 0);
+							BD.usuariosInsert(statement, nombreUsuario, contraseniaUsuario);
 							JOptionPane.showMessageDialog(null, "Usuario registrado con �xito", "OK",
 									JOptionPane.INFORMATION_MESSAGE);
 							vaciarCampos();
 						} else {
 							JOptionPane.showMessageDialog(null, "Hasta otra!!");
 						}
-					} else if (resul == 1) {
-						JOptionPane.showMessageDialog(null, "La contrase�a no es correcta!!");
-						logger.log(Level.SEVERE, "Se ha equivocado en la contrase�a");
 					} else {
-						JOptionPane.showMessageDialog(null, "BIENVENIDO");
-						v.dispose();
-						VentanaMenu v = new VentanaMenu(nombreUsuario,65,0,0,0,"");
-						v.main(nombreUsuario,65,0,0,0,"");
+						// Usuario existe, Comprobar contraseña
+						if(user.getConstrasenia().equals(contraseniaUsuario))
+						{
+							JOptionPane.showMessageDialog(null, "BIENVENIDO");
+							v.dispose();
+							VentanaMenu v = new VentanaMenu(nombreUsuario,65,0,0,0,"");
+							v.main(nombreUsuario,65,0,0,0,"");
+
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "La contrase�a no es correcta!!");
+							logger.log(Level.SEVERE, "Se ha equivocado en la contrase�a");
+						}
+						
 
 					}
 

@@ -1,9 +1,11 @@
 package baseDeDatos;
 
+import java.awt.List;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.*;
 
-import javax.swing.JTextField;
+import data.Usuario;
 
 /** Clase de gesti�n de base de datos del sistema de analiticas
  * @author andoni.eguiluz @ ingenieria.deusto.es
@@ -12,8 +14,12 @@ public class BD {
 
 	private static Exception lastError = null;  // Informaci�n de �ltimo error SQL ocurrido
 	// TODO CAMBIAR CONSTANTES
-	private static final String NOMBRETABLA = "Usuarios";
-	private static final String COLUMNAS_TABLA = " (nombre string, contrasenia string, puntuacion integer)";
+	private static final String TABLA_USUARIO = "Usuarios";
+	private static final String COLUMNAS_TABLA_USUARIO = " (nombre string PRIMARY KEY, contrasenia string)";
+	private static final String TABLA_PUNTUACION = "Puntuaciones";
+	private static final String COLUMNAS_TABLA_PUNTUACIONES = " (id integer AUTOINCREMENT, nombre string , puntuacion integer) ";
+	
+	
 	/** Inicializa una BD SQLITE y devuelve una conexi�n con ella
 	 * @param nombreBD	Nombre de fichero de la base de datos
 	 * @return	Conexi�n con la base de datos indicada. Si hay alg�n error, se devuelve null
@@ -58,7 +64,8 @@ public class BD {
 			Statement statement = con.createStatement();
 			statement.setQueryTimeout(30);  // poner timeout 30 msg
 			try {
-				statement.executeUpdate("create table "+NOMBRETABLA+COLUMNAS_TABLA);
+				statement.executeUpdate("create table " + TABLA_USUARIO + COLUMNAS_TABLA_USUARIO);
+				statement.executeUpdate("create table " + TABLA_PUNTUACION + COLUMNAS_TABLA_PUNTUACIONES);
 			} catch (SQLException e) {} // Tabla ya existe. Nada que hacer
 			log( Level.INFO, "Creada base de datos", null );
 			return statement;
@@ -79,7 +86,8 @@ public class BD {
 		try {
 			Statement statement = con.createStatement();
 			statement.setQueryTimeout(30);  // poner timeout 30 msg
-			statement.executeUpdate("drop table if exists "+NOMBRETABLA);
+			statement.executeUpdate("drop table if exists " + TABLA_USUARIO);
+			statement.executeUpdate("drop table if exists " + TABLA_PUNTUACION);
 			log( Level.INFO, "Reiniciada base de datos", null );
 			return usarCrearTablasBD( con );
 		} catch (SQLException e) {
@@ -122,10 +130,12 @@ public class BD {
 	 * @param contador	contador a a�adir a esa nueva fila de la BD
 	 * @return	true si la inserci�n es correcta, false en caso contrario
 	 */
-	public static boolean usuariosInsert( Statement st, String nombre, String contrasenia ,int puntuacion ) {
+	
+	//Tabla USUARIOS:
+	public static boolean usuariosInsert( Statement st, String nombre, String contrasenia ) {
 		String sentSQL = "";
 		try {
-			sentSQL = "insert into usuarios values('" + secu(nombre) + "', " + contrasenia + "', " + puntuacion + ")";
+			sentSQL = "insert into usuarios values ('" + secu(nombre) + "', '" + contrasenia + "')";
 			int val = st.executeUpdate( sentSQL );
 			log( Level.INFO, "BD fila a�adida " + val + " fila\t" + sentSQL, null );
 			if (val!=1) {  // Se tiene que a�adir 1 - error si no
@@ -140,31 +150,61 @@ public class BD {
 			return false;
 		}
 	}
+	
+	//Tabla PUNTUACIONES:
+	public static boolean puntuacionesInsert( Statement st, String nombre, String puntuacion ) {
+		String sentSQL = "";
+		try {
+			sentSQL = "insert into usuarios values ('" + secu(nombre) + "', '" + puntuacion + "')";
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD fila a�adida " + val + " fila\t" + sentSQL, null );
+			if (val!=1) {  // Se tiene que a�adir 1 - error si no
+				log( Level.SEVERE, "Error en insert de BD\t" + sentSQL, null );
+				return false;  
+			}
+			return true;
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 
 	/** Realiza una consulta a la tabla abierta de la BD, usando la sentencia SELECT de SQL
 	 * @param st	Sentencia ya abierta de Base de Datos (con la estructura de tabla correspondiente a la analitica)
 	 * @param codigo	C�digo a buscar en la tabla
 	 * @return	contador cargado desde la base de datos para ese c�digo, Integer.MAX_VALUE si hay cualquier error
 	 */
-	public static int analiticaSelect( Statement st, String txtNombreUsuario ) {
+	
+	  
+	//Tabla USUARIOS:
+	public static Usuario usuarioSelect( Statement st, String txtNombreUsuario ) {
 		String sentSQL = "";
+		Usuario user = null;
 		try {
-			int ret = Integer.MAX_VALUE;
-			sentSQL = "select * from analitica where codigo='" + txtNombreUsuario + "'";
+			sentSQL = "select * from " + TABLA_USUARIO + " where nombre='" + txtNombreUsuario + "'";
 			ResultSet rs = st.executeQuery( sentSQL );
 			if (rs.next()) {
-				ret = rs.getInt( "contador" );
+				String nombre = rs.getString( "nombre" );
+				String pass = rs.getString( "contrasenia" );
+				ArrayList<Integer> list = new ArrayList<Integer>();
+				user =  new Usuario(nombre, pass, list);
 			}
 			rs.close();
 			log( Level.INFO, "BD\t" + sentSQL, null );
-			return ret;
 		} catch (SQLException e) {
 			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
 			lastError = e;
 			e.printStackTrace();
-			return Integer.MAX_VALUE;
+			
 		}
+		return user;
 	}
+	
+	//Tabla PUNTUACIONES:
+	
 
 	/** Modifica una anal�tica en la tabla abierta de BD, usando la sentencia UPDATE de SQL
 	 * @param st	Sentencia ya abierta de Base de Datos (con la estructura de tabla correspondiente a la anal�tica)
@@ -172,10 +212,32 @@ public class BD {
 	 * @param contador	Contador a modificar de ese c�digo
 	 * @return	true si la inserci�n es correcta, false en caso contrario
 	 */
-	public static boolean analiticaUpdate( Statement st, String codigo, int contador ) {
+	
+	//Tabla USUARIOS:
+	public static boolean usuariosUpdate( Statement st, String nombre, String contrasenia ) {
 		String sentSQL = "";
 		try {
-			sentSQL = "update analitica set contador=" + contador + " where codigo='" + codigo + "'";
+			sentSQL = "update usuarios set contador=" + nombre + " where codigo='" + contrasenia + "'";
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD modificada " + val + " fila\t" + sentSQL, null );
+			if (val!=1) {  // Se tiene que modificar 1 - error si no
+				log( Level.SEVERE, "Error en update de BD\t" + sentSQL, null );
+				return false;  
+			}
+			return true;
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//Tabla PUNTUACIONES:
+	public static boolean puntuacionesUpdate( Statement st, String nombre, int puntuacion ) {
+		String sentSQL = "";
+		try {
+			sentSQL = "update puntuaciones set contador=" + secu(nombre) + " where codigo='" + puntuacion + "'";
 			int val = st.executeUpdate( sentSQL );
 			log( Level.INFO, "BD modificada " + val + " fila\t" + sentSQL, null );
 			if (val!=1) {  // Se tiene que modificar 1 - error si no
@@ -196,10 +258,28 @@ public class BD {
 	 * @param codigo	C�digo de anal�tica a borrar de la base de datos
 	 * @return	true si el borrado es correcto, false en caso contrario
 	 */
-	public static boolean analiticaDelete( Statement st, String codigo ) {
+
+	//Tabla USUARIOS:
+	public static boolean usuariosDelete( Statement st, String nombre ) {
 		String sentSQL = "";
 		try {
-			sentSQL = "delete from analitica where codigo='" + secu(codigo) + "'";
+			sentSQL = "delete from usuarios where codigo= '" + secu(nombre) + "'";
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD borrada " + val + " fila\t" + sentSQL, null );
+			return (val==1);
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//Tabla PUNTUACIONES:
+	public static boolean puntuacionesDelete (Statement st, String nombre) {
+		String sentSQL = "";
+		try {
+			sentSQL = "delete from puntuaciones where codigo= '" + secu(nombre) + "'";
 			int val = st.executeUpdate( sentSQL );
 			log( Level.INFO, "BD borrada " + val + " fila\t" + sentSQL, null );
 			return (val==1);

@@ -20,6 +20,10 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
 
 public class VentanaJuego extends JFrame implements KeyListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int windowWidth = 800;
 	private int windowHeight = 600;
 	private Serpiente snake;
@@ -75,7 +79,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		life = 3;
 		score = 0;
 		inicializoObjetos();
-		JOptionPane.showMessageDialog(this, "Puedes jugar con el puntero del ratón pulsando la tecla 'R'", "Atención",
+		JOptionPane.showMessageDialog(this, "Puedes jugar con el puntero del ratï¿½n pulsando la tecla 'R'", "Atenciï¿½n",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
@@ -235,7 +239,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			snake.direccion("DER");
 			break;
 		case KeyEvent.VK_ESCAPE:
-			String resp = JOptionPane.showInputDialog("¿Estás seguro de que quieres abandonar la partida? (S/N)");
+			String resp = JOptionPane.showInputDialog("ï¿½Estï¿½s seguro de que quieres abandonar la partida? (S/N)");
 			if (resp.equalsIgnoreCase("S")) {
 				this.dispose();
 				Musica.stop(1);
