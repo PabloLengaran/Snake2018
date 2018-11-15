@@ -193,7 +193,7 @@ public class BD {
 				user =  new Usuario(nombre, pass, list);
 			}
 			rs.close();
-			log( Level.INFO, "BD\t" + sentSQL, null );
+			log( Level.INFO, "BD\t" + sentSQL, null);
 		} catch (SQLException e) {
 			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
 			lastError = e;
