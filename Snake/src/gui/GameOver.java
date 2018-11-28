@@ -7,12 +7,16 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+
+import baseDeDatos.BD;
 import data.HiloGameOver1;
 import data.HiloGameOver2;
 import data.Musica;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.awt.Toolkit;
 
 public class GameOver extends JFrame {
@@ -20,7 +24,10 @@ public class GameOver extends JFrame {
 	private JFrame frame;
 	private JLabel lblGameOver, lbl1, lbl2;
 	private String usuario;
+	
 
+	 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -45,12 +52,15 @@ public class GameOver extends JFrame {
 	public GameOver(String usuario, int dificultad, float volumenE, float volumenM, float volumenP, String fondo) {
 		this.usuario = usuario;
 		initialize(dificultad, volumenE, volumenM, volumenP, fondo);
+		
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(int dificultad, float volumenE, float volumenM, float volumenP, String fondo) {
+		
 		Musica.stop(1);
 		Musica.gameOver(volumenP);
 		frame = new JFrame();
@@ -97,7 +107,7 @@ public class GameOver extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				lbl1 = new JLabel("Pulsa ENTER para volver aL menú");
+				lbl1 = new JLabel("Pulsa ENTER para volver aL menï¿½");
 				lbl1.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
 				lbl1.setHorizontalAlignment(SwingConstants.CENTER);
 				lbl1.setForeground(Color.WHITE);

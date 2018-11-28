@@ -7,12 +7,17 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import baseDeDatos.BD;
 import data.Manzana;
+import data.Moneda;
 import data.Musica;
 import data.Obstaculo;
 import data.Serpiente;
@@ -28,12 +33,14 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private int windowHeight = 600;
 	private Serpiente snake;
 	private Manzana manzana;
+	private Moneda moneda;
 	private Obstaculo muro;
 	private Obstaculo muro2;
 	private Obstaculo muro3;
 	private Obstaculo muro4;
 	private Obstaculo muro5;
 	private int score;
+	private int creditos;
 	private int life;
 	private long goal;
 	private int tiempoDemora;
@@ -44,6 +51,9 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private float volumenPartida = 0;
 	private float volumenMenu = 0;
 	private String fondo;
+	private Connection con;
+	private Statement st;
+	private int creditosBD;
 
 	public static void main(String args, int tiempoDemora, float volumenE, float volumenM, float volumenP, String fondo) {
 		VentanaJuego v = new VentanaJuego(args, tiempoDemora, volumenE,volumenM,volumenP, fondo);
@@ -51,6 +61,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			v.punteroMouse = MouseInfo.getPointerInfo().getLocation();
 			v.juego();
 			v.sleep(tiempoDemora);
+			
 		}
 	}
 
@@ -76,8 +87,11 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		this.setVisible(true);
 		this.createBufferStrategy(2);
 		this.addKeyListener(this);
-		life = 3;
+		life = 4;
 		score = 0;
+		creditos = 0;
+		con = BD.initBD("Usuarios");
+		st = BD.usarCrearTablasBD(con);
 		inicializoObjetos();
 		JOptionPane.showMessageDialog(this, "Puedes jugar con el puntero del rat�n pulsando la tecla 'R'", "Atenci�n",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -112,6 +126,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		snake.AddPointSerpiente();
 		manzana = new Manzana();
 		manzana.newObjeto();
+		moneda = new Moneda();
+		moneda.newObjeto();
 		muro = new Obstaculo();
 		muro.newObjeto();
 		muro2 = new Obstaculo();
@@ -139,12 +155,14 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			g.drawImage(new ImageIcon(VentanaJuego.class.getResource(fondo)).getImage(), 0, 0, windowWidth, windowHeight,null);
 			snake.dibujoSnake(g);
 			manzana.dibujaObjeto(g);
+			moneda.dibujaObjeto(g);
 			muro.dibujaObjeto(g);
 			muro2.dibujaObjeto(g);
 			muro3.dibujaObjeto(g);
 			muro4.dibujaObjeto(g);
 			muro5.dibujaObjeto(g);
 			puntuacion(g);
+			creditos(g);
 			vida(g);
 		} finally {
 			g.dispose();
@@ -155,35 +173,43 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	}
 
 	private void colision() {
+		
 		if (snake.getLargo().get(0).equals(manzana.getPunto())) {
 			manzana.newObjeto();
 			snake.AddPointSerpiente();
 			Musica.sonidoRecompensa(volumenEfectos);
 			score += 10;
 			contador++;
-			if (contador % 3 == 0) {
+			if (contador % 5 == 0) {
 				life++;
 			}
 		}
+		
+		if (snake.getLargo().get(0).equals(moneda.getPunto())) {
+			moneda.newObjeto();
+			Musica.sonidoRecompensa(volumenEfectos);
+			creditos += 1;
+		}
 
 		if (snake.getLargo().get(0).equals(muro.getPunto()) || snake.getLargo().get(0).equals(muro2.getPunto()) || snake.getLargo().get(0).equals(muro3.getPunto()) || snake.getLargo().get(0).equals(muro4.getPunto()) || snake.getLargo().get(0).equals(muro5.getPunto()) ) {
+			life--;
 			if (life > 0) {
-				life--;
 				inicializoObjetos();
 				Musica.colision(volumenEfectos);
-			} else {
+			} else if (life == 0){
+				BD.creditosUpdate(st, usuario, creditos + BD.creditosSelect(st, usuario));
 				this.dispose();
 				new GameOver(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo).main(usuario,tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo);
 			}
 		}
 
-		if (snake.getLargo().get(0).x < 0 || snake.getLargo().get(0).x > 39 || snake.getLargo().get(0).y < 1
-				|| snake.getLargo().get(0).y > 29) {
+		if (snake.getLargo().get(0).x < 0 || snake.getLargo().get(0).x > 39 || snake.getLargo().get(0).y < 1 || snake.getLargo().get(0).y > 29) {
+			life--;
 			if (life > 0) {
-				life--;
 				inicializoObjetos();
 				Musica.colision(volumenEfectos);
-			} else {
+			} else if (life == 0){
+				BD.creditosUpdate(st, usuario, creditos + BD.creditosSelect(st, usuario));
 				this.dispose();
 				new GameOver(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo).main(usuario,tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo);
 			}
@@ -191,11 +217,12 @@ public class VentanaJuego extends JFrame implements KeyListener {
 
 		for (int n = 1; n < snake.getLargo().size(); n++) {
 			if (snake.getLargo().get(0).equals(snake.getLargo().get(n)) && snake.getLargo().size() > 2) {
-				if (life > 0) {
-					life--;
+				life--;
+				if (life > 0) {	
 					inicializoObjetos();
 					Musica.colision(volumenEfectos);
-				} else {
+				} else if (life == 0){
+					BD.creditosInsert(st, usuario, creditos + BD.creditosSelect(st, usuario)); 
 					this.dispose();
 					new GameOver(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo).main(usuario,tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo);
 				}
@@ -203,10 +230,18 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		}
 	}
 
+	//Puntuacion en la pantalla de juego.
 	private void puntuacion(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Consolas", Font.BOLD, 16));
 		g.drawString("Score: " + score, 20, 50);
+	}
+	
+	//Creditos en la pantalla de juego.
+	private void creditos(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Consolas", Font.BOLD, 16));
+		g.drawString("Creditos: " + creditos + "$", 20, 80);
 	}
 
 	private void vida(Graphics g) {

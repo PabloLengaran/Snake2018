@@ -13,15 +13,20 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import baseDeDatos.BD;
 import data.Musica;
 import javax.swing.border.BevelBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -45,6 +50,11 @@ public class VentanaConfiguracion extends JFrame {
 	private float volumenPartida;
 	private float volumenMenu;
 	private String fondo;
+	private Connection conUsuarios;
+	private Connection conPuntuaciones;
+	private Statement stUsuarios;
+	private Statement stPuntuaciones;
+	private int creditos;
 	
 
 	/**
@@ -73,6 +83,11 @@ public class VentanaConfiguracion extends JFrame {
 	 */
 	public VentanaConfiguracion(String usuario, int dificultadAnterior, float volumenEAnterior, float volumenMAnterior,
 			float volumenPAnterior, String fondoAnterior) {
+		//Inicializacion de la tabla usuarios
+		conUsuarios = BD.initBD("Usuarios");
+		stUsuarios = BD.usarCrearTablasBD(conUsuarios);
+		
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaConfiguracion.class.getResource("/recursos/SnakeIcon.png")));
 		this.fondo = fondoAnterior;
 		VentanaMenu v = new VentanaMenu(usuario, resultado, volumenEAnterior, volumenMAnterior, volumenPAnterior, fondoAnterior);
@@ -113,9 +128,9 @@ public class VentanaConfiguracion extends JFrame {
 		} else if (dificultadAnterior == 100) {
 			comboBox.setSelectedItem("Principiante");
 		} else if (dificultadAnterior == 80) {
-			comboBox.setSelectedItem("F�cil");
+			comboBox.setSelectedItem("Fácil");
 		} else if (dificultadAnterior == 45) {
-			comboBox.setSelectedItem("Dif�cil");
+			comboBox.setSelectedItem("Difícil");
 		} else {
 			comboBox.setSelectedItem("Extremo");
 		}
@@ -126,13 +141,13 @@ public class VentanaConfiguracion extends JFrame {
 				if (itemSeleecionado.equals("Principiante")) {
 					resultado = 100;
 					v.setDificultad(resultado);
-				} else if (itemSeleecionado.equals("F�cil")) {
+				} else if (itemSeleecionado.equals("Fácil")) {
 					resultado = 80;
 					v.setDificultad(resultado);
 				} else if (itemSeleecionado.equals("Media")) {
 					resultado = 65;
 					v.setDificultad(resultado);
-				} else if (itemSeleecionado.equals("Dif�cil")) {
+				} else if (itemSeleecionado.equals("Difícil")) {
 					resultado = 45;
 					v.setDificultad(resultado);
 				} else {
@@ -177,9 +192,7 @@ public class VentanaConfiguracion extends JFrame {
 		sliderMenu = new JSlider();
 		sliderMenu.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				System.out.println("Valor del slider menu: " + sliderMenu.getValue());
 				volumenMenu = sliderMenu.getValue();
-				System.out.println("Valor del volumen menu: " + volumenMenu);
 				
 				//Comprobamos si el volumen está al minimo y en caso de ser asi seleccionamos el checkbox.
 				if (volumenMenu == -80) {
@@ -232,9 +245,7 @@ public class VentanaConfiguracion extends JFrame {
 		sliderPartida = new JSlider();
 		sliderPartida.addChangeListener(new ChangeListener() {
 			 public void stateChanged(ChangeEvent e) {
-				 System.out.println("valor del slider de partida: " + sliderPartida.getValue());
 				 volumenPartida = sliderPartida.getValue();
-				 System.out.println("Valor del volumen de Partida: " + volumenPartida);
 				 
 				//Comprobamos si el volumen está al minimo y en caso de ser asi seleccionamos el checkbox.
 				 if (volumenPartida == -80) {
@@ -285,11 +296,7 @@ public class VentanaConfiguracion extends JFrame {
 		sliderEfectos = new JSlider();
 		sliderEfectos.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				
-				System.out.println("valor del slider efectos: " + sliderEfectos.getValue());
 				volumenEfectos = sliderEfectos.getValue();
-				
-				System.out.println("valor del volumen efectos: " + volumenEfectos);
 				
 				//Comprobamos si el volumen está al minimo y en caso de ser asi seleccionamos el checkbox.
 				if (volumenEfectos == -80) {
@@ -419,7 +426,9 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton_1.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (creditos >=0){
 				fondo = "../recursos/Fondo.png";
+				}
 			}
 		});
 		panel_10.add(btnNewButton_1);
@@ -428,7 +437,11 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fondo = "../recursos/Fondo3.jpg";
+				if (BD.creditosSelect(stUsuarios, usuario) >= 100) { 
+					fondo = "../recursos/Fondo3.jpg";
+				} else {
+					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 200$");
+				}
 			}
 		});
 		btnNewButton_3.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo3.jpg")));
@@ -438,7 +451,11 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fondo = "../recursos/Fondo4.jpg";
+				if (BD.creditosSelect(stUsuarios, usuario) >= 200) {
+					fondo = "../recursos/Fondo4.jpg";
+				} else {
+					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 200$");
+				}
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo4.jpg")));
@@ -448,7 +465,12 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fondo = "../recursos/Fondo2.png";
+				if (BD.creditosSelect(stUsuarios, usuario) >=400) {
+					fondo = "../recursos/Fondo2.png";
+				} else {
+					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 400$");
+				}
+				
 			}
 		});
 		btnNewButton_2.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo2.png")));
@@ -485,6 +507,33 @@ public class VentanaConfiguracion extends JFrame {
 			}
 		});
 		panel.add(btnGuardar, BorderLayout.EAST);
+		
+		JPanel panel_11 = new JPanel();
+		panel.add(panel_11, BorderLayout.CENTER);
+		panel_11.setLayout(null);
+		
+		
+		JButton btn_VerCreditos = new JButton("Creditos");
+		btn_VerCreditos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				creditos = BD.creditosSelect(stUsuarios, usuario);
+				JOptionPane.showMessageDialog(panelPrincipal, "Creditos de " + usuario + ": " + creditos + "$");
+			}
+		});
+		btn_VerCreditos.setBounds(118, 42, 126, 52);
+		panel_11.add(btn_VerCreditos);
+		
+		JButton btn_Puntuaciones = new JButton("Puntuaciones");
+		btn_Puntuaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Integer> a = BD.puntuacionesSelect(stUsuarios, usuario);
+				
+				for (Integer integer : a) {
+					System.out.println(integer);
+				}
+			}
+		});
+		btn_Puntuaciones.setBounds(322, 42, 126, 52);
+		panel_11.add(btn_Puntuaciones);
 	}
-
 }

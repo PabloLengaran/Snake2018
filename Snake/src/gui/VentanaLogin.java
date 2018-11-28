@@ -72,6 +72,8 @@ public class VentanaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaLogin() {
+		setTitle("Snake");
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLogin.class.getResource("/recursos/SnakeIcon.png")));
 
 		// crea la sentencia
@@ -141,7 +143,7 @@ public class VentanaLogin extends JFrame {
 					if (user == null) {
 						String resp = JOptionPane.showInputDialog("No est�s registrado. �Quieres registrarte? (S/N)");
 						if (resp.equalsIgnoreCase("S")) {
-							BD.usuariosInsert(statement, nombreUsuario, contraseniaUsuario);
+							BD.usuariosInsert(statement, nombreUsuario, contraseniaUsuario, 0);
 							JOptionPane.showMessageDialog(null, "Usuario registrado con �xito", "OK",
 									JOptionPane.INFORMATION_MESSAGE);
 							vaciarCampos();

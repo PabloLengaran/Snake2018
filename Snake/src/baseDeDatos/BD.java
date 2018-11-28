@@ -8,16 +8,17 @@ import java.util.logging.*;
 import data.Usuario;
 
 /** Clase de gesti�n de base de datos del sistema de analiticas
- * @author andoni.eguiluz @ ingenieria.deusto.es
+ * @author Pablo_Gaviria
  */
 public class BD {
 
 	private static Exception lastError = null;  // Informaci�n de �ltimo error SQL ocurrido
 	// TODO CAMBIAR CONSTANTES
 	private static final String TABLA_USUARIO = "Usuarios";
-	private static final String COLUMNAS_TABLA_USUARIO = " (nombre string PRIMARY KEY, contrasenia string)";
+	private static final String COLUMNAS_TABLA_USUARIO = " (nombre string PRIMARY KEY, contrasenia string, creditos integer)";
 	private static final String TABLA_PUNTUACION = "Puntuaciones";
-	private static final String COLUMNAS_TABLA_PUNTUACIONES = " (id integer AUTOINCREMENT, nombre string , puntuacion integer) ";
+	private static final String COLUMNAS_TABLA_PUNTUACIONES = " (nombre string , puntuaciones integer) ";
+	
 	
 	
 	/** Inicializa una BD SQLITE y devuelve una conexi�n con ella
@@ -131,11 +132,11 @@ public class BD {
 	 * @return	true si la inserci�n es correcta, false en caso contrario
 	 */
 	
-	//Tabla USUARIOS:
-	public static boolean usuariosInsert( Statement st, String nombre, String contrasenia ) {
+	//USUARIOS:
+	public static boolean usuariosInsert( Statement st, String nombre, String contrasenia, int creditos ) {
 		String sentSQL = "";
 		try {
-			sentSQL = "insert into usuarios values ('" + secu(nombre) + "', '" + contrasenia + "')";
+			sentSQL = "insert into usuarios values ('" + secu(nombre) + "', '" + contrasenia + "', " + creditos + ")";
 			int val = st.executeUpdate( sentSQL );
 			log( Level.INFO, "BD fila a�adida " + val + " fila\t" + sentSQL, null );
 			if (val!=1) {  // Se tiene que a�adir 1 - error si no
@@ -151,11 +152,31 @@ public class BD {
 		}
 	}
 	
-	//Tabla PUNTUACIONES:
-	public static boolean puntuacionesInsert( Statement st, String nombre, String puntuacion ) {
+	//PUNTUACIONES:
+	public static boolean puntuacionesInsert( Statement st, String nombre, int puntuacion ) {
 		String sentSQL = "";
 		try {
-			sentSQL = "insert into usuarios values ('" + secu(nombre) + "', '" + puntuacion + "')";
+			sentSQL = "insert into puntuaciones values ('" + secu(nombre) + "', '" + puntuacion + "')";
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD fila a�adida " + val + " fila\t" + sentSQL, null );
+			if (val!=1) {  // Se tiene que a�adir 1 - error si no
+				log( Level.SEVERE, "Error en insert de BD\t" + sentSQL, null );
+				return false;  
+			}
+			return true;
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//CREDITOS:
+	public static boolean creditosInsert( Statement st, String nombre, int creditos ) {
+		String sentSQL = "";
+		try {
+			sentSQL = "insert into usuarios values (" + creditos + ") where nombre = ' " + nombre + "'";
 			int val = st.executeUpdate( sentSQL );
 			log( Level.INFO, "BD fila a�adida " + val + " fila\t" + sentSQL, null );
 			if (val!=1) {  // Se tiene que a�adir 1 - error si no
@@ -180,7 +201,7 @@ public class BD {
 	
 	  
 	//Tabla USUARIOS:
-	public static Usuario usuarioSelect( Statement st, String txtNombreUsuario ) {
+	public static Usuario usuarioSelect (Statement st, String txtNombreUsuario) {
 		String sentSQL = "";
 		Usuario user = null;
 		try {
@@ -204,6 +225,47 @@ public class BD {
 	}
 	
 	//Tabla PUNTUACIONES:
+	public static ArrayList<Integer> puntuacionesSelect (Statement st, String nombre) {
+		String sentSQL = "";
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		try {
+			sentSQL = "select puntuaciones from " + TABLA_PUNTUACION + " where nombre= '" + nombre + "'";
+			ResultSet rs = st.executeQuery(sentSQL);
+			if (rs.next()) {
+				int puntuacion = rs.getInt("puntuacion");
+				list.add(puntuacion);
+			}
+			rs.close();
+			log( Level.INFO, "BD\t" + sentSQL, null);
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	//Tabla CREDITOS: 
+	public static int creditosSelect (Statement st, String nombre) {
+		String sentSQL = "";
+		int creditos = 0;
+		try {
+			sentSQL = "select creditos from " + TABLA_USUARIO + " where nombre= '" + nombre + "'";
+			ResultSet rst = st.executeQuery (sentSQL );
+			while (rst.next()) {
+				creditos = rst.getInt("creditos");
+			}
+			rst.close();
+			log(Level.INFO, "BD\t " +sentSQL, null);
+			return creditos;
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+			return 0;
+		}
+		
+	}
 	
 
 	/** Modifica una anal�tica en la tabla abierta de BD, usando la sentencia UPDATE de SQL
@@ -238,6 +300,25 @@ public class BD {
 		String sentSQL = "";
 		try {
 			sentSQL = "update puntuaciones set contador=" + secu(nombre) + " where codigo='" + puntuacion + "'";
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD modificada " + val + " fila\t" + sentSQL, null );
+			if (val!=1) {  // Se tiene que modificar 1 - error si no
+				log( Level.SEVERE, "Error en update de BD\t" + sentSQL, null );
+				return false;  
+			}
+			return true;
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static boolean creditosUpdate( Statement st, String nombre, int creditos) {
+		String sentSQL = "";
+		try {
+			sentSQL = "update " + TABLA_USUARIO + " set creditos= " + creditos + " where nombre= " + nombre ;
 			int val = st.executeUpdate( sentSQL );
 			log( Level.INFO, "BD modificada " + val + " fila\t" + sentSQL, null );
 			if (val!=1) {  // Se tiene que modificar 1 - error si no
@@ -291,7 +372,23 @@ public class BD {
 		}
 	}
 
+	//Tabla CREDITOS:
+		public static boolean creditosDelete (Statement st, String nombre) {
+			String sentSQL = "";
+			try {
+				sentSQL = "delete from usuarios where codigo= '" + secu(nombre) + "'";
+				int val = st.executeUpdate( sentSQL );
+				log( Level.INFO, "BD borrada " + val + " fila\t" + sentSQL, null );
+				return (val==1);
+			} catch (SQLException e) {
+				log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+				lastError = e;
+				e.printStackTrace();
+				return false;
+			}
+		}
 	
+		
 	/////////////////////////////////////////////////////////////////////
 	//                      M�todos privados                           //
 	/////////////////////////////////////////////////////////////////////

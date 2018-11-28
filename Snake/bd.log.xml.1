@@ -62,3 +62,2541 @@
   <message>BD	select * from Usuarios where nombre='pablo'</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-27T17:25:45.886283Z</date>
+  <millis>1543339545886</millis>
+  <nanos>283000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:45.915289Z</date>
+  <millis>1543339545915</millis>
+  <nanos>289000</nanos>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:45.951511Z</date>
+  <millis>1543339545951</millis>
+  <nanos>511000</nanos>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:45.952814Z</date>
+  <millis>1543339545952</millis>
+  <nanos>814000</nanos>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:53.295660Z</date>
+  <millis>1543339553295</millis>
+  <nanos>660000</nanos>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:56.482919Z</date>
+  <millis>1543339556482</millis>
+  <nanos>919000</nanos>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:56.484450Z</date>
+  <millis>1543339556484</millis>
+  <nanos>450000</nanos>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:56.692506Z</date>
+  <millis>1543339556692</millis>
+  <nanos>506000</nanos>
+  <sequence>7</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:56.694008Z</date>
+  <millis>1543339556694</millis>
+  <nanos>8000</nanos>
+  <sequence>8</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:25:57.600132Z</date>
+  <millis>1543339557600</millis>
+  <nanos>132000</nanos>
+  <sequence>9</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>SEVERE</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Error en BD	select creditos from Usuarioswhere nombre= 'pablo'</message>
+  <exception>
+    <message>org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (near "=": syntax error)</message>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>920</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>932</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>throwex</method>
+      <line>897</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>prepare</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>prepare</method>
+      <line>227</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeQuery</method>
+      <line>81</line>
+    </frame>
+    <frame>
+      <class>baseDeDatos.BD</class>
+      <method>creditosSelect</method>
+      <line>253</line>
+    </frame>
+    <frame>
+      <class>gui.VentanaConfiguracion$17</class>
+      <method>actionPerformed</method>
+      <line>499</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton</class>
+      <method>fireActionPerformed</method>
+      <line>1967</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton$Handler</class>
+      <method>actionPerformed</method>
+      <line>2308</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>fireActionPerformed</method>
+      <line>405</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>setPressed</method>
+      <line>262</line>
+    </frame>
+    <frame>
+      <class>javax.swing.plaf.basic.BasicButtonListener</class>
+      <method>mouseReleased</method>
+      <line>279</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processMouseEvent</method>
+      <line>6632</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processMouseEvent</method>
+      <line>3342</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6397</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2263</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>5008</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2321</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>retargetMouseEvent</method>
+      <line>4918</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>processMouseEvent</method>
+      <line>4547</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>dispatchEvent</method>
+      <line>4488</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2307</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>95</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-27T17:42:12.337575Z</date>
+  <millis>1543340532337</millis>
+  <nanos>575000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:12.364393Z</date>
+  <millis>1543340532364</millis>
+  <nanos>393000</nanos>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:12.413475Z</date>
+  <millis>1543340532413</millis>
+  <nanos>475000</nanos>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:12.414729Z</date>
+  <millis>1543340532414</millis>
+  <nanos>729000</nanos>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:19.206240Z</date>
+  <millis>1543340539206</millis>
+  <nanos>240000</nanos>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:21.878999Z</date>
+  <millis>1543340541878</millis>
+  <nanos>999000</nanos>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:21.880313Z</date>
+  <millis>1543340541880</millis>
+  <nanos>313000</nanos>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:22.076490Z</date>
+  <millis>1543340542076</millis>
+  <nanos>490000</nanos>
+  <sequence>7</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:22.077409Z</date>
+  <millis>1543340542077</millis>
+  <nanos>409000</nanos>
+  <sequence>8</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:23.674152Z</date>
+  <millis>1543340543674</millis>
+  <nanos>152000</nanos>
+  <sequence>9</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>SEVERE</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Error en BD	select creditos from Usuarios where nombre= 'pablo'</message>
+  <exception>
+    <message>org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such column: creditos)</message>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>920</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>932</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>throwex</method>
+      <line>897</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>prepare</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>prepare</method>
+      <line>227</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeQuery</method>
+      <line>81</line>
+    </frame>
+    <frame>
+      <class>baseDeDatos.BD</class>
+      <method>creditosSelect</method>
+      <line>253</line>
+    </frame>
+    <frame>
+      <class>gui.VentanaConfiguracion$17</class>
+      <method>actionPerformed</method>
+      <line>499</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton</class>
+      <method>fireActionPerformed</method>
+      <line>1967</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton$Handler</class>
+      <method>actionPerformed</method>
+      <line>2308</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>fireActionPerformed</method>
+      <line>405</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>setPressed</method>
+      <line>262</line>
+    </frame>
+    <frame>
+      <class>javax.swing.plaf.basic.BasicButtonListener</class>
+      <method>mouseReleased</method>
+      <line>279</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processMouseEvent</method>
+      <line>6632</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processMouseEvent</method>
+      <line>3342</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6397</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2263</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>5008</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2321</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>retargetMouseEvent</method>
+      <line>4918</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>processMouseEvent</method>
+      <line>4547</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>dispatchEvent</method>
+      <line>4488</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2307</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>95</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-27T17:42:44.827449Z</date>
+  <millis>1543340564827</millis>
+  <nanos>449000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:44.851224Z</date>
+  <millis>1543340564851</millis>
+  <nanos>224000</nanos>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:44.898200Z</date>
+  <millis>1543340564898</millis>
+  <nanos>200000</nanos>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:44.899391Z</date>
+  <millis>1543340564899</millis>
+  <nanos>391000</nanos>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:53.346923Z</date>
+  <millis>1543340573346</millis>
+  <nanos>923000</nanos>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:55.889929Z</date>
+  <millis>1543340575889</millis>
+  <nanos>929000</nanos>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:55.891093Z</date>
+  <millis>1543340575891</millis>
+  <nanos>93000</nanos>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:56.069623Z</date>
+  <millis>1543340576069</millis>
+  <nanos>623000</nanos>
+  <sequence>7</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:56.070493Z</date>
+  <millis>1543340576070</millis>
+  <nanos>493000</nanos>
+  <sequence>8</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:42:57.168650Z</date>
+  <millis>1543340577168</millis>
+  <nanos>650000</nanos>
+  <sequence>9</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>SEVERE</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Error en BD	select creditos from Usuarios where nombre= 'pablo'</message>
+  <exception>
+    <message>org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such column: creditos)</message>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>920</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>932</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>throwex</method>
+      <line>897</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>prepare</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>prepare</method>
+      <line>227</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeQuery</method>
+      <line>81</line>
+    </frame>
+    <frame>
+      <class>baseDeDatos.BD</class>
+      <method>creditosSelect</method>
+      <line>253</line>
+    </frame>
+    <frame>
+      <class>gui.VentanaConfiguracion$17</class>
+      <method>actionPerformed</method>
+      <line>499</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton</class>
+      <method>fireActionPerformed</method>
+      <line>1967</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton$Handler</class>
+      <method>actionPerformed</method>
+      <line>2308</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>fireActionPerformed</method>
+      <line>405</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>setPressed</method>
+      <line>262</line>
+    </frame>
+    <frame>
+      <class>javax.swing.plaf.basic.BasicButtonListener</class>
+      <method>mouseReleased</method>
+      <line>279</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processMouseEvent</method>
+      <line>6632</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processMouseEvent</method>
+      <line>3342</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6397</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2263</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>5008</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2321</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>retargetMouseEvent</method>
+      <line>4918</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>processMouseEvent</method>
+      <line>4547</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>dispatchEvent</method>
+      <line>4488</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2307</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>95</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-27T17:54:12.817319Z</date>
+  <millis>1543341252817</millis>
+  <nanos>319000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-27T17:55:30.330302Z</date>
+  <millis>1543341330330</millis>
+  <nanos>302000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:30.353342Z</date>
+  <millis>1543341330353</millis>
+  <nanos>342000</nanos>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:30.395617Z</date>
+  <millis>1543341330395</millis>
+  <nanos>617000</nanos>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:30.396844Z</date>
+  <millis>1543341330396</millis>
+  <nanos>844000</nanos>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:37.397641Z</date>
+  <millis>1543341337397</millis>
+  <nanos>641000</nanos>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:41.191760Z</date>
+  <millis>1543341341191</millis>
+  <nanos>760000</nanos>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:41.195322Z</date>
+  <millis>1543341341195</millis>
+  <nanos>322000</nanos>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:41.398497Z</date>
+  <millis>1543341341398</millis>
+  <nanos>497000</nanos>
+  <sequence>7</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:41.399948Z</date>
+  <millis>1543341341399</millis>
+  <nanos>948000</nanos>
+  <sequence>8</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:55:42.749498Z</date>
+  <millis>1543341342749</millis>
+  <nanos>498000</nanos>
+  <sequence>9</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>SEVERE</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Error en BD	select creditos from Usuarios where nombre= 'pablo'</message>
+  <exception>
+    <message>org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such column: creditos)</message>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>920</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>932</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>throwex</method>
+      <line>897</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>prepare</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>prepare</method>
+      <line>227</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeQuery</method>
+      <line>81</line>
+    </frame>
+    <frame>
+      <class>baseDeDatos.BD</class>
+      <method>creditosSelect</method>
+      <line>253</line>
+    </frame>
+    <frame>
+      <class>gui.VentanaConfiguracion$17</class>
+      <method>actionPerformed</method>
+      <line>499</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton</class>
+      <method>fireActionPerformed</method>
+      <line>1967</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton$Handler</class>
+      <method>actionPerformed</method>
+      <line>2308</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>fireActionPerformed</method>
+      <line>405</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>setPressed</method>
+      <line>262</line>
+    </frame>
+    <frame>
+      <class>javax.swing.plaf.basic.BasicButtonListener</class>
+      <method>mouseReleased</method>
+      <line>279</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processMouseEvent</method>
+      <line>6632</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processMouseEvent</method>
+      <line>3342</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6397</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2263</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>5008</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2321</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>retargetMouseEvent</method>
+      <line>4918</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>processMouseEvent</method>
+      <line>4547</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>dispatchEvent</method>
+      <line>4488</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2307</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>95</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-27T17:56:21.842179Z</date>
+  <millis>1543341381842</millis>
+  <nanos>179000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:56:21.868821Z</date>
+  <millis>1543341381868</millis>
+  <nanos>821000</nanos>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:56:21.911742Z</date>
+  <millis>1543341381911</millis>
+  <nanos>742000</nanos>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:56:21.913468Z</date>
+  <millis>1543341381913</millis>
+  <nanos>468000</nanos>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:56:28.881399Z</date>
+  <millis>1543341388881</millis>
+  <nanos>399000</nanos>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-27T17:56:32.857843Z</date>
+  <millis>1543341392857</millis>
+  <nanos>843000</nanos>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>SEVERE</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Error en BD	insert into usuarios values ('pablo', '1234')</message>
+  <exception>
+    <message>org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table usuarios has 3 columns but 2 values were supplied)</message>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>920</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>932</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>throwex</method>
+      <line>897</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>_exec</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeUpdate</method>
+      <line>116</line>
+    </frame>
+    <frame>
+      <class>baseDeDatos.BD</class>
+      <method>usuariosInsert</method>
+      <line>139</line>
+    </frame>
+    <frame>
+      <class>gui.VentanaLogin$2</class>
+      <method>actionPerformed</method>
+      <line>144</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton</class>
+      <method>fireActionPerformed</method>
+      <line>1967</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton$Handler</class>
+      <method>actionPerformed</method>
+      <line>2308</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>fireActionPerformed</method>
+      <line>405</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>setPressed</method>
+      <line>262</line>
+    </frame>
+    <frame>
+      <class>javax.swing.plaf.basic.BasicButtonListener</class>
+      <method>mouseReleased</method>
+      <line>279</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processMouseEvent</method>
+      <line>6632</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processMouseEvent</method>
+      <line>3342</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6397</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2263</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>5008</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2321</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>retargetMouseEvent</method>
+      <line>4918</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>processMouseEvent</method>
+      <line>4547</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>dispatchEvent</method>
+      <line>4488</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2307</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>95</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+<record>
+  <date>2018-11-27T17:56:49.719953Z</date>
+  <millis>1543341409719</millis>
+  <nanos>953000</nanos>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-27T17:58:26.154266Z</date>
+  <millis>1543341506154</millis>
+  <nanos>266000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:58:26.183302Z</date>
+  <millis>1543341506183</millis>
+  <nanos>302000</nanos>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:58:26.252211Z</date>
+  <millis>1543341506252</millis>
+  <nanos>211000</nanos>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T17:58:26.254555Z</date>
+  <millis>1543341506254</millis>
+  <nanos>555000</nanos>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T17:58:33.906026Z</date>
+  <millis>1543341513906</millis>
+  <nanos>26000</nanos>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-27T17:58:36.147847Z</date>
+  <millis>1543341516147</millis>
+  <nanos>847000</nanos>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>SEVERE</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Error en BD	insert into usuarios values ('pablo', '1234'0')</message>
+  <exception>
+    <message>org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (near "0": syntax error)</message>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>920</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>932</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>throwex</method>
+      <line>897</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>_exec</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeUpdate</method>
+      <line>116</line>
+    </frame>
+    <frame>
+      <class>baseDeDatos.BD</class>
+      <method>usuariosInsert</method>
+      <line>139</line>
+    </frame>
+    <frame>
+      <class>gui.VentanaLogin$2</class>
+      <method>actionPerformed</method>
+      <line>144</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton</class>
+      <method>fireActionPerformed</method>
+      <line>1967</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton$Handler</class>
+      <method>actionPerformed</method>
+      <line>2308</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>fireActionPerformed</method>
+      <line>405</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>setPressed</method>
+      <line>262</line>
+    </frame>
+    <frame>
+      <class>javax.swing.plaf.basic.BasicButtonListener</class>
+      <method>mouseReleased</method>
+      <line>279</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processMouseEvent</method>
+      <line>6632</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processMouseEvent</method>
+      <line>3342</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6397</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2263</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>5008</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2321</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>retargetMouseEvent</method>
+      <line>4918</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>processMouseEvent</method>
+      <line>4547</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>dispatchEvent</method>
+      <line>4488</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2307</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>95</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-27T18:02:59.528307Z</date>
+  <millis>1543341779528</millis>
+  <nanos>307000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T18:02:59.560723Z</date>
+  <millis>1543341779560</millis>
+  <nanos>723000</nanos>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T18:02:59.657884Z</date>
+  <millis>1543341779657</millis>
+  <nanos>884000</nanos>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-27T18:02:59.659614Z</date>
+  <millis>1543341779659</millis>
+  <nanos>614000</nanos>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T18:03:06.717073Z</date>
+  <millis>1543341786717</millis>
+  <nanos>73000</nanos>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-27T18:03:08.576690Z</date>
+  <millis>1543341788576</millis>
+  <nanos>690000</nanos>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD fila a�adida 1 fila	insert into usuarios values ('pablo', '1234', 0)</message>
+</record>
+<record>
+  <date>2018-11-27T18:03:15.907304Z</date>
+  <millis>1543341795907</millis>
+  <nanos>304000</nanos>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-27T18:03:19.277048Z</date>
+  <millis>1543341799277</millis>
+  <nanos>48000</nanos>
+  <sequence>7</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T18:03:19.278143Z</date>
+  <millis>1543341799278</millis>
+  <nanos>143000</nanos>
+  <sequence>8</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T18:03:19.487275Z</date>
+  <millis>1543341799487</millis>
+  <nanos>275000</nanos>
+  <sequence>9</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Puntuaciones</message>
+</record>
+<record>
+  <date>2018-11-27T18:03:19.488232Z</date>
+  <millis>1543341799488</millis>
+  <nanos>232000</nanos>
+  <sequence>10</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-27T18:03:20.957450Z</date>
+  <millis>1543341800957</millis>
+  <nanos>450000</nanos>
+  <sequence>11</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>SEVERE</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Error en BD	select creditos from Usuarios where nombre= 'pablo'</message>
+  <exception>
+    <message>org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such column: creditos)</message>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>920</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>newSQLException</method>
+      <line>932</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>throwex</method>
+      <line>897</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>prepare</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>prepare</method>
+      <line>227</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeQuery</method>
+      <line>81</line>
+    </frame>
+    <frame>
+      <class>baseDeDatos.BD</class>
+      <method>creditosSelect</method>
+      <line>253</line>
+    </frame>
+    <frame>
+      <class>gui.VentanaConfiguracion$17</class>
+      <method>actionPerformed</method>
+      <line>499</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton</class>
+      <method>fireActionPerformed</method>
+      <line>1967</line>
+    </frame>
+    <frame>
+      <class>javax.swing.AbstractButton$Handler</class>
+      <method>actionPerformed</method>
+      <line>2308</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>fireActionPerformed</method>
+      <line>405</line>
+    </frame>
+    <frame>
+      <class>javax.swing.DefaultButtonModel</class>
+      <method>setPressed</method>
+      <line>262</line>
+    </frame>
+    <frame>
+      <class>javax.swing.plaf.basic.BasicButtonListener</class>
+      <method>mouseReleased</method>
+      <line>279</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processMouseEvent</method>
+      <line>6632</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processMouseEvent</method>
+      <line>3342</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6397</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2263</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>5008</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2321</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>retargetMouseEvent</method>
+      <line>4918</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>processMouseEvent</method>
+      <line>4547</line>
+    </frame>
+    <frame>
+      <class>java.awt.LightweightDispatcher</class>
+      <method>dispatchEvent</method>
+      <line>4488</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2307</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4840</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>95</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-11-28T16:05:58.798587Z</date>
+  <millis>1543421158798</millis>
+  <nanos>587000</nanos>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-28T16:05:58.823680Z</date>
+  <millis>1543421158823</millis>
+  <nanos>680000</nanos>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-28T16:05:58.882661Z</date>
+  <millis>1543421158882</millis>
+  <nanos>661000</nanos>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-28T16:05:58.884376Z</date>
+  <millis>1543421158884</millis>
+  <nanos>376000</nanos>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:06.678412Z</date>
+  <millis>1543421166678</millis>
+  <nanos>412000</nanos>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:08.173605Z</date>
+  <millis>1543421168173</millis>
+  <nanos>605000</nanos>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:08.174739Z</date>
+  <millis>1543421168174</millis>
+  <nanos>739000</nanos>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:08.336256Z</date>
+  <millis>1543421168336</millis>
+  <nanos>256000</nanos>
+  <sequence>7</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:08.337436Z</date>
+  <millis>1543421168337</millis>
+  <nanos>436000</nanos>
+  <sequence>8</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:11.052842Z</date>
+  <millis>1543421171052</millis>
+  <nanos>842000</nanos>
+  <sequence>9</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:11.053746Z</date>
+  <millis>1543421171053</millis>
+  <nanos>746000</nanos>
+  <sequence>10</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:11.066565Z</date>
+  <millis>1543421171066</millis>
+  <nanos>565000</nanos>
+  <sequence>11</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:11.067328Z</date>
+  <millis>1543421171067</millis>
+  <nanos>328000</nanos>
+  <sequence>12</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:11.261614Z</date>
+  <millis>1543421171261</millis>
+  <nanos>614000</nanos>
+  <sequence>13</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:11.262649Z</date>
+  <millis>1543421171262</millis>
+  <nanos>649000</nanos>
+  <sequence>14</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:11.277154Z</date>
+  <millis>1543421171277</millis>
+  <nanos>154000</nanos>
+  <sequence>15</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:11.278013Z</date>
+  <millis>1543421171278</millis>
+  <nanos>13000</nanos>
+  <sequence>16</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-11-28T16:06:12.070454Z</date>
+  <millis>1543421172070</millis>
+  <nanos>454000</nanos>
+  <sequence>17</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>16</thread>
+  <message>BD	select puntuaciones from Puntuaciones where nombre= 'pablo'</message>
+</record>
+</log>

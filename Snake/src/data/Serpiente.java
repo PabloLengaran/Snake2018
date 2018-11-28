@@ -1,7 +1,7 @@
 package data;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -14,20 +14,20 @@ public class Serpiente {
 	// partes del
 	// cuerpo de la
 	// serpiente
-	private double snakeX = 0; // Posición en x de cada parte del cuerpo
-	private double snakeY = 0; // Posición en y de cada parte del cuerpo
+	private double snakeX = 0; // Posiciï¿½n en x de cada parte del cuerpo
+	private double snakeY = 0; // Posiciï¿½n en y de cada parte del cuerpo
 
 	// Cosntructor que crea la cabeza de la serpiente
 	public Serpiente() {
 		cuerpo.add(new Point(20, 15));
 	}
 
-	// Método que devuelve la longitud de la serpiente
+	// Mï¿½todo que devuelve la longitud de la serpiente
 	public ArrayList<Point> getLargo() {
 		return cuerpo;
 	}
 
-	// Método que dibuja la serpiente, mediante un bucle pinta todos los
+	// Mï¿½todo que dibuja la serpiente, mediante un bucle pinta todos los
 	// elementos del cuerpo
 	public void dibujoSnake(Graphics g) {
 		int contador = 0;
@@ -35,6 +35,8 @@ public class Serpiente {
 			contador++;
 			if (contador == 1) {
 				Point p = cuerpo.get(0);
+				//Graphics2D g2 = (Graphics2D) g;
+				//g2.rotate(Math.PI/2, 10,10);
 				g.drawImage(new ImageIcon(Serpiente.class.getResource("../recursos/Head.png")).getImage(), p.x * 20,
 						p.y * 20, 20, 20, null);
 			} else {
@@ -50,26 +52,26 @@ public class Serpiente {
 		}
 	}
 
-	// Método que sirve para dotar de movilidad a la serpiente, y mediante un
-	// bucle establece la nueva posición de cada elemento como la del que le
+	// Mï¿½todo que sirve para dotar de movilidad a la serpiente, y mediante un
+	// bucle establece la nueva posiciï¿½n de cada elemento como la del que le
 	// precede
 	public void MoveSerpiente() {
 		for (int n = cuerpo.size() - 1; n > 0; n--) {
-			cuerpo.get(n).setLocation(cuerpo.get(n - 1)); // Cada punto ocupa la posición del punto que al que sigue
+			cuerpo.get(n).setLocation(cuerpo.get(n - 1)); // Cada punto ocupa la posiciï¿½n del punto que al que sigue
 		}
 
-		// El punto de la cabeza queda excluido del bucle(condición n>0) y se
-		// actualiza su posición con los valores siguientes
+		// El punto de la cabeza queda excluido del bucle(condiciÃ³n n>0) y se
+		// actualiza su posiciÃ³n con los valores siguientes
 		cuerpo.get(0).x += snakeX;
 		cuerpo.get(0).y += snakeY;
 	}
 	
-	// Método que añade un elemento al cuerpo de la serpiente, al ArrayList
+	// Mï¿½todo que aï¿½ade un elemento al cuerpo de la serpiente, al ArrayList
 	public void AddPointSerpiente() {
 		cuerpo.add(new Point());
 	}
 
-	// Método que establece la dirección de la serpiente
+	// Mï¿½todo que establece la direcciï¿½n de la serpiente
 	public void direccion(String d) {
 		switch (d) {
 		case "ARR":

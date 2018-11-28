@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -24,6 +25,10 @@ import java.awt.Toolkit;
 
 public class VentanaMenu extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel panel, panel2, panel3;
 	private JFrame frame;
 	private String usuario;
@@ -158,12 +163,24 @@ public class VentanaMenu extends JFrame {
 				.getScaledInstance(btn3.getWidth(), btn3.getHeight(), Image.SCALE_DEFAULT)));
 		frame.getContentPane().add(btn3);
 
+		VentanaLogin vl = new VentanaLogin();
+		
 		JButton btn4 = new JButton("");
 		btn4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btn4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Musica.clickBoton(volumenEfectos);
-				System.exit(0);
+				int i = JOptionPane.showConfirmDialog(frame, "¿Está seguro de que quiere salir?");
+				if ( i== 0) {
+					System.exit(0);
+				} else if (i == 1){
+					int a = JOptionPane.showConfirmDialog(frame, "¿Desea cambiar de usuario?");
+					if (a == 0) {
+						vl.main(null);
+						frame.dispose();
+					}
+					
+				}
 			}
 		});
 		btn4.setBounds(10, 475, 75, 75);
@@ -190,9 +207,13 @@ public class VentanaMenu extends JFrame {
 					btn5.setIcon(iconoOFF);
 					Musica.stop(6);
 					volumenMenu = -80;
+					volumenEfectos = -80;
+					volumenPartida = -80;
 				} else {
 					btn5.setIcon(iconoON);
 					volumenMenu = 0;
+					volumenEfectos = 0;
+					volumenPartida = 0;
 					Musica.musicaMenu(volumenMenu);
 				}
 			}
@@ -235,11 +256,11 @@ public class VentanaMenu extends JFrame {
 		ImageIcon icono = new ImageIcon(
 				fondo.getImage().getScaledInstance(lblFondo.getWidth(), lblFondo.getHeight(), Image.SCALE_DEFAULT));
 
-		JLabel lblUsuario = new JLabel("Hola, " + this.usuario + "!");
+		JLabel lblUsuario = new JLabel("Hola, " + this.usuario.toUpperCase() + "!");
 		lblUsuario.setFont(new Font("Consolas", Font.PLAIN, 15));
 		lblUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblUsuario.setForeground(Color.WHITE);
-		lblUsuario.setBounds(684, 11, 90, 14);
+		lblUsuario.setBounds(654, 17, 126, 19);
 		frame.getContentPane().add(lblUsuario);
 
 		lblFondo.setIcon(icono);
