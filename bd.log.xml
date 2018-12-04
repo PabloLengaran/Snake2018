@@ -29780,3 +29780,297 @@
   </exception>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-12-04T21:24:09</date>
+  <millis>1543955049835</millis>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:09</date>
+  <millis>1543955049848</millis>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:09</date>
+  <millis>1543955049877</millis>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:09</date>
+  <millis>1543955049878</millis>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:09</date>
+  <millis>1543955049885</millis>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:09</date>
+  <millis>1543955049886</millis>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:14</date>
+  <millis>1543955054761</millis>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:16</date>
+  <millis>1543955056844</millis>
+  <sequence>7</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:16</date>
+  <millis>1543955056845</millis>
+  <sequence>8</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:17</date>
+  <millis>1543955057023</millis>
+  <sequence>9</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:17</date>
+  <millis>1543955057025</millis>
+  <sequence>10</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:21</date>
+  <millis>1543955061133</millis>
+  <sequence>11</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>23</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:24:21</date>
+  <millis>1543955061136</millis>
+  <sequence>12</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>23</thread>
+  <message>Creada base de datos</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-12-04T21:38:30</date>
+  <millis>1543955910259</millis>
+  <sequence>0</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:30</date>
+  <millis>1543955910265</millis>
+  <sequence>1</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:30</date>
+  <millis>1543955910298</millis>
+  <sequence>2</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:30</date>
+  <millis>1543955910299</millis>
+  <sequence>3</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:30</date>
+  <millis>1543955910305</millis>
+  <sequence>4</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:30</date>
+  <millis>1543955910307</millis>
+  <sequence>5</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:35</date>
+  <millis>1543955915472</millis>
+  <sequence>6</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>BD	select * from Usuarios where nombre='pablo'</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:37</date>
+  <millis>1543955917411</millis>
+  <sequence>7</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:37</date>
+  <millis>1543955917413</millis>
+  <sequence>8</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:37</date>
+  <millis>1543955917587</millis>
+  <sequence>9</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:37</date>
+  <millis>1543955917588</millis>
+  <sequence>10</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>15</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:41</date>
+  <millis>1543955921920</millis>
+  <sequence>11</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>24</thread>
+  <message>Conectada base de datos Usuarios</message>
+</record>
+<record>
+  <date>2018-12-04T21:38:41</date>
+  <millis>1543955921921</millis>
+  <sequence>12</sequence>
+  <logger>baseDeDatos.BD</logger>
+  <level>INFO</level>
+  <class>baseDeDatos.BD</class>
+  <method>log</method>
+  <thread>24</thread>
+  <message>Creada base de datos</message>
+</record>
+</log>
