@@ -23,7 +23,7 @@ public class Manzana extends Objeto{
 	@Override
 	public void dibujaObjeto(Graphics g) {
 		g.setColor(Color.RED);
-		g.fillOval(super.punto.x * 20, super.punto.y * 20, 20, 20); //Crea un óvalo con las dimensiones especificadas
+		g.fillOval(super.punto.x * 20, super.punto.y * 20, 20, 20); //Crea un ovalo con las dimensiones especificadas
 		g.drawImage(new ImageIcon(Manzana.class.getResource("../recursos/Manzana.png")).getImage(), super.punto.x * 20, super.punto.y * 20, 20, 20,null);
 	}
 

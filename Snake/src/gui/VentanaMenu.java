@@ -37,16 +37,17 @@ public class VentanaMenu extends JFrame {
 	private float volumenPartida = 0;
 	private float volumenMenu = 0;
 	private String background;
+	private int selectedSnake;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String args, int dificultad, float volumenE, float volumenM, float volumenP,
-			String imagen) {
+			String imagen, int serpienteSeleccionada) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaMenu window = new VentanaMenu(args, dificultad, volumenE, volumenM, volumenP, imagen);
+					VentanaMenu window = new VentanaMenu(args, dificultad, volumenE, volumenM, volumenP, imagen, serpienteSeleccionada);
 					window.frame.setLocationRelativeTo(null);
 					window.frame.setResizable(false);
 					window.frame.setVisible(true);
@@ -61,13 +62,15 @@ public class VentanaMenu extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public VentanaMenu(String usuario, int dificultad, float volumenE, float volumenM, float volumenP, String imagen) {
+	public VentanaMenu(String usuario, int dificultad, float volumenE, float volumenM, float volumenP, String imagen, int serpienteSeleccionada) {
 		this.usuario = usuario;
 		this.dificultad = dificultad;
 		this.volumenEfectos = volumenE;
 		this.volumenMenu = volumenM;
 		this.volumenPartida = volumenP;
 		this.background = imagen;
+		this.selectedSnake = serpienteSeleccionada;
+		
 		initialize();
 	}
 
@@ -82,6 +85,7 @@ public class VentanaMenu extends JFrame {
 		ImageIcon fondo = new ImageIcon(VentanaMenu.class.getResource("/recursos/FondoMenu.gif"));
 		frame.getContentPane().setLayout(null);
 
+		//Se crea el boton de play, en caso de pulsarlo accedemos a la ventana de juego
 		JButton btn1 = new JButton("");
 		btn1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btn1.addActionListener(new ActionListener() {
@@ -92,7 +96,7 @@ public class VentanaMenu extends JFrame {
 						Musica.clickBoton(volumenEfectos);
 						frame.dispose();
 						Musica.stop(6);
-						VentanaJuego.main(usuario, dificultad, volumenEfectos, volumenMenu, volumenPartida, background);
+						VentanaJuego.main(usuario, dificultad, volumenEfectos, volumenMenu, volumenPartida, background, selectedSnake);
 					}
 				}).start();
 			}
@@ -105,14 +109,15 @@ public class VentanaMenu extends JFrame {
 				.getScaledInstance(btn1.getWidth(), btn1.getHeight(), Image.SCALE_DEFAULT)));
 		frame.getContentPane().add(btn1);
 
+		//Se crea el boton de acceso a la ventana de configuracion, en caso de pulsarlo accedemos a la ventana de configuracion
 		JButton btn2 = new JButton("");
 		btn2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Musica.clickBoton(volumenEfectos);
 				VentanaConfiguracion v = new VentanaConfiguracion(usuario, dificultad, volumenEfectos, volumenMenu,
-						volumenPartida, background);
-				v.main(usuario, dificultad, volumenEfectos, volumenMenu, volumenPartida, background);
+						volumenPartida, background, selectedSnake);
+				v.main(usuario, dificultad, volumenEfectos, volumenMenu, volumenPartida, background, selectedSnake);
 				Musica.stop(6);
 				frame.dispose();
 			}
@@ -125,6 +130,7 @@ public class VentanaMenu extends JFrame {
 				.getScaledInstance(btn2.getWidth(), btn2.getHeight(), Image.SCALE_DEFAULT)));
 		frame.getContentPane().add(btn2);
 
+		//Se crea el boton de eleccion de niveles
 		JButton btn3 = new JButton("");
 		btn3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btn3.addActionListener(new ActionListener() {
@@ -165,17 +171,18 @@ public class VentanaMenu extends JFrame {
 
 		VentanaLogin vl = new VentanaLogin();
 		
+		//Se crea el boton para salir de la aplicacion
 		JButton btn4 = new JButton("");
 		btn4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btn4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { //Cuando se pulsa el boton se muestra un mensaje para confirmar si se desea salir.
 				Musica.clickBoton(volumenEfectos);
-				int i = JOptionPane.showConfirmDialog(frame, "¿Está seguro de que quiere salir?");
-				if ( i== 0) {
-					System.exit(0);
-				} else if (i == 1){
-					int a = JOptionPane.showConfirmDialog(frame, "¿Desea cambiar de usuario?");
-					if (a == 0) {
+				int i = JOptionPane.showConfirmDialog(frame, "¿Está seguro de que quiere salir?"); //Se muestra el mensaje
+				if ( i== 0) { //En caso de que la respuesta sea afirmativa se sale de la aplicacion.
+					System.exit(0); //Se cierra la aplicacion
+				} else if (i == 1){ //En caso de que la respuesta sea negativa, se muestra otro mensaje para comprobar si se desea cambiar de usuario
+					int a = JOptionPane.showConfirmDialog(frame, "¿Desea cambiar de usuario?"); //Se muestra el segundo mensaje
+					if (a == 0) { // //En caso de que la respuesta sea afirmativa se cierra la ventanaMenu y se abre la ventanaLogin donde podremos cambiar de usuario.
 						vl.main(null);
 						frame.dispose();
 					}
@@ -191,6 +198,7 @@ public class VentanaMenu extends JFrame {
 				.getScaledInstance(btn4.getWidth(), btn4.getHeight(), Image.SCALE_DEFAULT)));
 		frame.getContentPane().add(btn4);
 
+		//Se crea el boton para desconectar el volumen general
 		JButton btn5 = new JButton("");
 		btn5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btn5.setBounds(10, 5, 45, 45);
@@ -221,13 +229,14 @@ public class VentanaMenu extends JFrame {
 		btn5.setOpaque(false);
 		btn5.setContentAreaFilled(false);
 		btn5.setBorderPainted(false);
-		if (volumenMenu == -80) {
-			btn5.setIcon(iconoOFF);
-		} else {
-			btn5.setIcon(iconoON);
+		if (volumenMenu == -80) { //En caso de que el volumen este bajado 
+			btn5.setIcon(iconoOFF); //El icono se pone en modo OFF
+		} else { //En caso de que el volumen este subido
+			btn5.setIcon(iconoON); //El icono se pone en modo ON
 		}
 		frame.getContentPane().add(btn5);
 
+		//Se crea el boton de acceso al editor de niveles
 		JButton btn6 = new JButton("");
 		btn6.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btn6.addActionListener(new ActionListener() {
@@ -243,6 +252,7 @@ public class VentanaMenu extends JFrame {
 				.getScaledInstance(btn6.getWidth(), btn6.getHeight(), Image.SCALE_DEFAULT)));
 		frame.getContentPane().add(btn6);
 
+		//Se crea el Lavel donde se muestra el titulo principal de la aplicacion
 		JLabel label = new JLabel("");
 		label.setBounds(142, 5, 500, 150);
 		label.setOpaque(false);
@@ -250,12 +260,14 @@ public class VentanaMenu extends JFrame {
 				.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT)));
 		frame.getContentPane().add(label);
 
+		//Se crea el JLavel del fondo donde se muestra el fondo
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(-8, 5, 800, 600);
 		lblFondo.setHorizontalAlignment(SwingConstants.CENTER);
 		ImageIcon icono = new ImageIcon(
 				fondo.getImage().getScaledInstance(lblFondo.getWidth(), lblFondo.getHeight(), Image.SCALE_DEFAULT));
 
+		//Se crea el JLavel donde se muestra el nombre del usuario con el que se ha iniciado la aplicacion
 		JLabel lblUsuario = new JLabel("Hola, " + this.usuario.toUpperCase() + "!");
 		lblUsuario.setFont(new Font("Consolas", Font.PLAIN, 15));
 		lblUsuario.setHorizontalAlignment(SwingConstants.RIGHT);

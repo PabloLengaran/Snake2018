@@ -12,7 +12,6 @@ import java.awt.Color;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import baseDeDatos.BD;
 import data.Musica;
 import javax.swing.border.BevelBorder;
@@ -20,7 +19,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -42,7 +40,7 @@ public class VentanaConfiguracion extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame();
 	private JPanel contentPane;
-	private Object[] dificultad = { "Principiante", "F�cil", "Media", "Dif�cil", "Extremo" };
+	private Object[] dificultad = { "Principiante", "Sencillo", "Media", "Dificil", "Extremo" };
 	private JComboBox comboBox;
 	private JSlider sliderMenu, sliderPartida, sliderEfectos, sliderTodo;
 	private int resultado = 65;
@@ -50,24 +48,24 @@ public class VentanaConfiguracion extends JFrame {
 	private float volumenPartida;
 	private float volumenMenu;
 	private String fondo;
-	private Connection conUsuarios;
-	private Connection conPuntuaciones;
+	private int snakeSelected;
+	private Connection conUsuarios;	
 	private Statement stUsuarios;
-	private Statement stPuntuaciones;
 	private int creditos;
+	
 	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String args, int dificultadAnterior, float volumenEAnterior, float volumenMAnterior,
-			float volumenPAnterior, String fondoAnterior) {
+			float volumenPAnterior, String fondoAnterior, int serpienteSeleccionada) {
 	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					VentanaConfiguracion frame = new VentanaConfiguracion(args, dificultadAnterior, volumenEAnterior,
-							volumenMAnterior, volumenPAnterior, fondoAnterior);
+							volumenMAnterior, volumenPAnterior, fondoAnterior, serpienteSeleccionada);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -82,7 +80,7 @@ public class VentanaConfiguracion extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaConfiguracion(String usuario, int dificultadAnterior, float volumenEAnterior, float volumenMAnterior,
-			float volumenPAnterior, String fondoAnterior) {
+			float volumenPAnterior, String fondoAnterior, int serpienteSeleccionada) {
 		//Inicializacion de la tabla usuarios
 		conUsuarios = BD.initBD("Usuarios");
 		stUsuarios = BD.usarCrearTablasBD(conUsuarios);
@@ -90,7 +88,7 @@ public class VentanaConfiguracion extends JFrame {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaConfiguracion.class.getResource("/recursos/SnakeIcon.png")));
 		this.fondo = fondoAnterior;
-		VentanaMenu v = new VentanaMenu(usuario, resultado, volumenEAnterior, volumenMAnterior, volumenPAnterior, fondoAnterior);
+		VentanaMenu v = new VentanaMenu(usuario, resultado, volumenEAnterior, volumenMAnterior, volumenPAnterior, fondoAnterior, serpienteSeleccionada);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -117,40 +115,42 @@ public class VentanaConfiguracion extends JFrame {
 		panel_1.add(panel_5, BorderLayout.CENTER);
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
+		//Se crea el JComboBox de eleccion de la dificultad
 		comboBox = new JComboBox();
 		comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		for (int i = 0; i < dificultad.length; i++) {
 			comboBox.addItem(dificultad[i]);
 		}
-
-		if (dificultadAnterior == 65) {
+		
+		if (dificultadAnterior == 65) { //Si la dificultad anterior es igual a 65 la dificultad sera Media
 			comboBox.setSelectedItem("Media");
-		} else if (dificultadAnterior == 100) {
+		} else if (dificultadAnterior == 100) { //Si la dificultad anterior es igual a 100 la dificultad sera Principiante
 			comboBox.setSelectedItem("Principiante");
-		} else if (dificultadAnterior == 80) {
-			comboBox.setSelectedItem("Fácil");
-		} else if (dificultadAnterior == 45) {
-			comboBox.setSelectedItem("Difícil");
-		} else {
+		} else if (dificultadAnterior == 80) { //Si la dificultad anterior es igual a 80 la dificultad sera Sencillo
+			comboBox.setSelectedItem("Sencillo");
+		} else if (dificultadAnterior == 45) { //Si la dificultad anterior es igual a 45 la dificultad sera Dificil
+			comboBox.setSelectedItem("Dificil");
+		} else { //Si no es ninguno de los anterirores la dificultad sera Extremo
 			comboBox.setSelectedItem("Extremo");
 		}
 
+		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String itemSeleecionado = (String) comboBox.getSelectedItem();
-				if (itemSeleecionado.equals("Principiante")) {
+				if (itemSeleecionado.equals("Principiante")) { //Si el item que hemos seleccionado es PRINCIPIANTE la dificultad sera de 100
 					resultado = 100;
 					v.setDificultad(resultado);
-				} else if (itemSeleecionado.equals("Fácil")) {
+				} else if (itemSeleecionado.equals("Sencillo")) { //Si el item que hemos seleccionado es SENCILLO la dificultad sera de 100
 					resultado = 80;
 					v.setDificultad(resultado);
-				} else if (itemSeleecionado.equals("Media")) {
+				} else if (itemSeleecionado.equals("Media")) { //Si el item que hemos seleccionado es MEDIA la dificultad sera de 100
 					resultado = 65;
 					v.setDificultad(resultado);
-				} else if (itemSeleecionado.equals("Difícil")) {
+				} else if (itemSeleecionado.equals("Dificil")) { //Si el item que hemos seleccionado es DIFICIL la dificultad sera de 45
 					resultado = 45;
 					v.setDificultad(resultado);
-				} else {
+				} else { //Si el item que hemos seleccionado no es ninguno de los anteriores la dificultad sera de 25
 					resultado = 25;
 					v.setDificultad(resultado);
 				}
@@ -193,7 +193,6 @@ public class VentanaConfiguracion extends JFrame {
 		sliderMenu.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				volumenMenu = sliderMenu.getValue();
-				
 				//Comprobamos si el volumen está al minimo y en caso de ser asi seleccionamos el checkbox.
 				if (volumenMenu == -80) {
 					chckbxSilenciarMenu.setSelected(true);
@@ -247,7 +246,7 @@ public class VentanaConfiguracion extends JFrame {
 			 public void stateChanged(ChangeEvent e) {
 				 volumenPartida = sliderPartida.getValue();
 				 
-				//Comprobamos si el volumen está al minimo y en caso de ser asi seleccionamos el checkbox.
+				//Comprobamos si el volumen esta al minimo y en caso de ser asi seleccionamos el checkbox.
 				 if (volumenPartida == -80) {
 					chckbxSilenciarPartida.setSelected(true);
 				} else {
@@ -418,6 +417,7 @@ public class VentanaConfiguracion extends JFrame {
 		panel_3.add(panel_10, BorderLayout.CENTER);
 		panel_10.setLayout(new GridLayout(0, 4, 2, 0));
 		
+		//Se crea el boton para el cambio del primer fondo de pantalla de juego (Gratis)
 		JButton btnNewButton_1 = new JButton("");
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_1.setOpaque(false);
@@ -433,26 +433,28 @@ public class VentanaConfiguracion extends JFrame {
 		});
 		panel_10.add(btnNewButton_1);
 		
+		//Se crea el boton para el cambio del segundo fondo de pantalla de juego (Minimo = 100 creditos)
 		JButton btnNewButton_3 = new JButton("");
 		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (BD.creditosSelect(stUsuarios, usuario) >= 100) { 
-					fondo = "../recursos/Fondo3.jpg";
+				if (BD.creditosSelect(stUsuarios, usuario) >= 100) { //Se comprueba la disposicion de creditos
+					fondo = "../recursos/Fondo3.jpg"; //En caso de ser superior se pone el nuevo fondo
 				} else {
-					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 200$");
+					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 100$");
 				}
 			}
 		});
 		btnNewButton_3.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo3.jpg")));
 		panel_10.add(btnNewButton_3);
 		
+		//Se crea el boton para el cambio del tercer fondo de pantalla de juego (Minimo = 200 creditos)
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (BD.creditosSelect(stUsuarios, usuario) >= 200) {
-					fondo = "../recursos/Fondo4.jpg";
+				if (BD.creditosSelect(stUsuarios, usuario) >= 200) { //Se comprueba la disposicion de creditos
+					fondo = "../recursos/Fondo4.jpg"; //En caso de ser superior se pone el nuevo fondo
 				} else {
 					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 200$");
 				}
@@ -461,12 +463,13 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo4.jpg")));
 		panel_10.add(btnNewButton);
 		
+		//Se crea el boton para el cambio del cuarto fondo de pantalla de juego (Minimo = 400 creditos)
 		JButton btnNewButton_2 = new JButton("");
 		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (BD.creditosSelect(stUsuarios, usuario) >=400) {
-					fondo = "../recursos/Fondo2.png";
+				if (BD.creditosSelect(stUsuarios, usuario) >=400) { //Se comprueba la disposicion de creditos
+					fondo = "../recursos/Fondo2.png"; //En caso de ser superior se pone el nuevo fondo
 				} else {
 					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 400$");
 				}
@@ -480,6 +483,7 @@ public class VentanaConfiguracion extends JFrame {
 		panelPrincipal.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 
+		//Se crea el boton cancelar el cual se utiliza para regresar a la ventanaMenu sin guardar los cambios realizados en esta ventana
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCancelar.setBackground(SystemColor.textHighlight);
@@ -488,12 +492,13 @@ public class VentanaConfiguracion extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Musica.clickBoton(volumenEAnterior);
-				v.main(usuario, dificultadAnterior, volumenEAnterior, volumenMAnterior, volumenPAnterior, fondoAnterior);
+				v.main(usuario, dificultadAnterior, volumenEAnterior, volumenMAnterior, volumenPAnterior, fondoAnterior, serpienteSeleccionada);
 				dispose();
 			}
 		});
 		panel.add(btnCancelar, BorderLayout.WEST);
-
+		
+		//Se crea el boton para guardar los diferentes cambios realizados en los diferentes hambitos que podemos encontrar en esta ventana
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnGuardar.setForeground(Color.BLACK);
@@ -502,7 +507,7 @@ public class VentanaConfiguracion extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Musica.clickBoton(volumenEfectos);
-				v.main(usuario, resultado, volumenEfectos, volumenMenu, volumenPartida, fondo);
+				v.main(usuario, resultado, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected);
 				dispose();
 			}
 		});
@@ -512,28 +517,66 @@ public class VentanaConfiguracion extends JFrame {
 		panel.add(panel_11, BorderLayout.CENTER);
 		panel_11.setLayout(null);
 		
-		
+		//Se crea el boton para la visualizacion de los creditos del usuario
 		JButton btn_VerCreditos = new JButton("Creditos");
 		btn_VerCreditos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				creditos = BD.creditosSelect(stUsuarios, usuario);
-				JOptionPane.showMessageDialog(panelPrincipal, "Creditos de " + usuario + ": " + creditos + "$");
+				creditos = BD.creditosSelect(stUsuarios, usuario); //Se obtiene los creditos que estan guardados en la base de datos y se guardan en una nueva variable
+				JOptionPane.showMessageDialog(panelPrincipal, "Creditos de " + usuario.toUpperCase() + ": " + creditos + "$"); //Se muestra un mensaje informativo con el valor de la variable previamente mend¡cionada
 			}
 		});
-		btn_VerCreditos.setBounds(118, 42, 126, 52);
+		btn_VerCreditos.setBounds(302, 42, 126, 52);
 		panel_11.add(btn_VerCreditos);
 		
+		
+		//Se crea el boton para la visualizacion de la ventanaPuntuaciones
 		JButton btn_Puntuaciones = new JButton("Puntuaciones");
 		btn_Puntuaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Integer> a = BD.puntuacionesSelect(stUsuarios, usuario);
-				
-				for (Integer integer : a) {
-					System.out.println(integer);
+				VentanaTablaPuntuaciones vtp = new VentanaTablaPuntuaciones(usuario); //Se visualiza la ventanaPuntuaciones
+				vtp.setVisible(true);
+			}
+		});
+		btn_Puntuaciones.setBounds(440, 42, 126, 52);
+		panel_11.add(btn_Puntuaciones);
+		
+		
+		this.snakeSelected = serpienteSeleccionada;
+		
+		//Se crea el boton de seleccion de la serpiente verde
+		JButton btnNewButton_4 = new JButton("Serpiente Verde");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				snakeSelected = 0; //En caso de pulsar el boton se designara la serpiente de color verde a la partida
+			}
+		});
+		btnNewButton_4.setBounds(6, 42, 117, 52);
+		panel_11.add(btnNewButton_4);
+		
+		//Se crea el boton de seleccion o compra de la serpiente roja
+		JButton button = new JButton("Serpiente Roja");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (BD.serpienteSelect(stUsuarios, usuario) == 0) { //Se comprueba en la base de datos si el usuario dispone de la serpiente Roja
+					int i = JOptionPane.showConfirmDialog(panelPrincipal, "¿Desea comprar la serpiente roja?"); //Se pregunta si el usuario desea realizar la compra de la nueva serpiente
+					if (i == 0) { //Si la respuesta es afirmativa 
+						int creditos = BD.creditosSelect(stUsuarios, usuario); //Se obtiene a traves de la base de datos los creditos disponibles del usuario
+						if (creditos >= 300) { //Se comprueba si el usuario dispone de los creditos necesarios
+							BD.serpienteUpdate(stUsuarios, usuario, 1); //Se realiza un cambio en la base de datos en el valor de la serpiente
+							creditos = creditos - 300; //Se resta el valor de la serpiente a los creditos que tenia el usuario con el que se habia inicializado la aplicacion
+							BD.creditosUpdate(stUsuarios, usuario, creditos); //Se realiza un cambio en la base de datos en el valor de los creditos
+							snakeSelected = 1; //Se cambia el valor de la serpiente seleccionada y por lo tanto se visualizara la serpiente de color Roja
+						} else {
+							JOptionPane.showMessageDialog(panelPrincipal, "No tiene suficientes creditos"); //Se muestra un mensaje informativo
+						}
+					}
+				} else if (BD.serpienteSelect(stUsuarios, usuario) == 1) {
+					//Se cambia el valor de la serpiente seleccionada y por lo tanto se visualizara la serpiente de color Roja
+					snakeSelected = 1;
 				}
 			}
 		});
-		btn_Puntuaciones.setBounds(322, 42, 126, 52);
-		panel_11.add(btn_Puntuaciones);
+		button.setBounds(135, 42, 117, 52);
+		panel_11.add(button);
 	}
 }

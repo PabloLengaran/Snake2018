@@ -7,16 +7,12 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.SwingConstants;
-
-import baseDeDatos.BD;
 import data.HiloGameOver1;
 import data.HiloGameOver2;
 import data.Musica;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.Statement;
 import java.awt.Toolkit;
 
 public class GameOver extends JFrame {
@@ -25,17 +21,18 @@ public class GameOver extends JFrame {
 	private JLabel lblGameOver, lbl1, lbl2;
 	private String usuario;
 	
+	
 
 	 
 	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String args, int dificultad, float volumenE, float volumenM, float volumenP, String fondo) {
+	public static void main(String args, int dificultad, float volumenE, float volumenM, float volumenP, String fondo, int serpienteSeleccionada) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GameOver window = new GameOver(args, dificultad, volumenE, volumenM, volumenP, fondo);
+					GameOver window = new GameOver(args, dificultad, volumenE, volumenM, volumenP, fondo, serpienteSeleccionada);
 					window.frame.setLocationRelativeTo(null);
 					window.frame.setVisible(true);
 					window.hilos();
@@ -49,9 +46,9 @@ public class GameOver extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public GameOver(String usuario, int dificultad, float volumenE, float volumenM, float volumenP, String fondo) {
+	public GameOver(String usuario, int dificultad, float volumenE, float volumenM, float volumenP, String fondo, int serpienteSeleccionada) {
 		this.usuario = usuario;
-		initialize(dificultad, volumenE, volumenM, volumenP, fondo);
+		initialize(dificultad, volumenE, volumenM, volumenP, fondo, serpienteSeleccionada);
 		
 	}
 	
@@ -59,7 +56,7 @@ public class GameOver extends JFrame {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(int dificultad, float volumenE, float volumenM, float volumenP, String fondo) {
+	private void initialize(int dificultad, float volumenE, float volumenM, float volumenP, String fondo, int serpienteSeleccionada) {
 		
 		Musica.stop(1);
 		Musica.gameOver(volumenP);
@@ -70,8 +67,8 @@ public class GameOver extends JFrame {
 			public void keyReleased(KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					frame.dispose();
-					VentanaMenu v = new VentanaMenu(usuario, dificultad, volumenE, volumenM, volumenP, fondo);
-					v.main(usuario, dificultad, volumenE, volumenM, volumenP, fondo);
+					VentanaMenu v = new VentanaMenu(usuario, dificultad, volumenE, volumenM, volumenP, fondo, serpienteSeleccionada);
+					v.main(usuario, dificultad, volumenE, volumenM, volumenP, fondo, serpienteSeleccionada);
 				} else if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
 				}
@@ -92,7 +89,8 @@ public class GameOver extends JFrame {
 		lblGameOver.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(lblGameOver, BorderLayout.CENTER);
 	}
-//metodo en el que se ejecutan los distintos hilos del programa.
+	
+	//Metodo en el que se ejecutan los distintos hilos del programa.
 	public void hilos() {
 		(new Thread() {
 

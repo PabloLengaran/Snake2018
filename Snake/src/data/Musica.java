@@ -6,7 +6,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
 public class Musica {
-	// Clase para la gestión de la música, exceptuando el último método todos reproducen sonidos
+	// Clase para la gestiï¿½n de la mï¿½sica, exceptuando el ï¿½ltimo mï¿½todo todos reproducen sonidos
 	private static Clip sonido1;
 	private static Clip sonido2;
 	private static Clip sonido3;
@@ -15,6 +15,7 @@ public class Musica {
 	private static Clip sonido6;
 	private static Clip sonido7;
 
+	//Sonido 1 (fondo):
 	public static void musicaFondo(float i) {
 		try {
 			// Se obtiene un Clip de sonido
@@ -27,7 +28,7 @@ public class Musica {
 			FloatControl gainControl = (FloatControl) sonido1.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(i);
 
-			// Comienza la reproducción
+			// Comienza la reproducciï¿½n
 			sonido1.start();
 
 			// Bucle infinito
@@ -37,6 +38,7 @@ public class Musica {
 		}
 	}
 
+	//Sonido 2 (recompensa):
 	public static void sonidoRecompensa(float i) {
 		try {
 			// Se obtiene un Clip de sonido
@@ -49,7 +51,7 @@ public class Musica {
 			FloatControl gainControl = (FloatControl) sonido2.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(i);
 
-			// Comienza la reproducción
+			// Comienza la reproduccion
 			sonido2.start();
 
 			// Reproduce el fichero una vez
@@ -60,6 +62,7 @@ public class Musica {
 		}
 	}
 
+	//Sonido 3 (colision):
 	public static void colision(float i) {
 		try {
 			// Se obtiene un Clip de sonido
@@ -72,7 +75,7 @@ public class Musica {
 			FloatControl gainControl = (FloatControl) sonido3.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(i);
 
-			// Comienza la reproducción
+			// Comienza la reproduccion
 			sonido3.start();
 
 			// Reproduce el fichero una vez
@@ -81,7 +84,8 @@ public class Musica {
 			System.out.println("" + e);
 		}
 	}
-
+	
+	//Sonido 4 (game over):
 	public static void gameOver(float i) {
 		try {
 			// Se obtiene un Clip de sonido
@@ -94,7 +98,7 @@ public class Musica {
 			FloatControl gainControl = (FloatControl) sonido4.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(i);
 
-			// Comienza la reproducción
+			// Comienza la reproducciï¿½n
 			sonido4.start();
 
 			// Reproduce el fichero una vez
@@ -104,6 +108,7 @@ public class Musica {
 		}
 	}
 
+	//Sonido 5 (click del boton):
 	public static void clickBoton(float i) {
 		try {
 			// Se obtiene un Clip de sonido
@@ -116,7 +121,7 @@ public class Musica {
 			FloatControl gainControl = (FloatControl) sonido5.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(i);
 
-			// Comienza la reproducción
+			// Comienza la reproducciï¿½n
 			sonido5.start();
 
 			// Reproduce el fichero una vez
@@ -125,7 +130,8 @@ public class Musica {
 			System.out.println("" + e);
 		}
 	}
-
+	
+	//Sonido 6 (musica de la ventana menu):
 	public static void musicaMenu(float i) {
 		try {
 			// Se obtiene un Clip de sonido
@@ -138,7 +144,7 @@ public class Musica {
 			FloatControl gainControl = (FloatControl) sonido6.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(i);
 
-			// Comienza la reproducción
+			// Comienza la reproducciï¿½n
 			sonido6.start();
 
 			// Reproduce el fichero una vez
@@ -148,51 +154,52 @@ public class Musica {
 		}
 	}
 		
-		public static void click(float i) {
-			try {
-				// Se obtiene un Clip de sonido
-				sonido7 = AudioSystem.getClip();
+	//Sonido 7 (click):
+	public static void click(float i) {
+		try {
+			// Se obtiene un Clip de sonido
+			sonido7 = AudioSystem.getClip();
 
-				// Se carga con un fichero wav
-				sonido7.open(AudioSystem.getAudioInputStream(new File("src/recursos/Click.wav")));
+			// Se carga con un fichero wav
+			sonido7.open(AudioSystem.getAudioInputStream(new File("src/recursos/Click.wav")));
 
-				// Control de volumen
-				FloatControl gainControl = (FloatControl) sonido7.getControl(FloatControl.Type.MASTER_GAIN);
-				gainControl.setValue(i);
+			// Control de volumen
+			FloatControl gainControl = (FloatControl) sonido7.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(i);
 
-				// Comienza la reproducción
-				sonido7.start();
+			// Comienza la reproducciï¿½n
+			sonido7.start();
 
-				// Reproduce el fichero una vez
-				sonido7.loop(0);
-			} catch (Exception e) {
-				System.out.println("" + e);
-			}
+			// Reproduce el fichero una vez
+			sonido7.loop(0);
+		} catch (Exception e) {
+			System.out.println("" + e);
+		}
 	}
 		
-		// Método para la interrupción de cualquiera de los sonidos
+	// Metodo para la interrupcion de cualquiera de los sonidos:
 	public static void stop(int i) {
 		switch (i) {
 		case 1:
-			sonido1.stop();
+			sonido1.stop(); //Se para el sonido 1
 			break;
 		case 2:
-			sonido2.stop();
+			sonido2.stop(); //Se para el sonido 2
 			break;
 		case 3:
-			sonido3.stop();
+			sonido3.stop(); //Se para el sonido 3
 			break;
 		case 4:
-			sonido4.stop();
+			sonido4.stop(); //Se para el sonido 4
 			break;
 		case 5:
-			sonido5.stop();
+			sonido5.stop(); //Se para el sonido 5
 			break;
 		case 6:
-			sonido6.stop();
+			sonido6.stop(); //Se para el sonido 6
 			break;
 		case 7:
-			sonido7.stop();
+			sonido7.stop(); //Se para el sonido 7
 			break;
 		default:
 			break;

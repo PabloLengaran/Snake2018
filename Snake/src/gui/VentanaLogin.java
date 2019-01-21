@@ -78,8 +78,7 @@ public class VentanaLogin extends JFrame {
 
 		// crea la sentencia
 		/*
-		 * hay que crear manejador de fichero para indicar a qu� fichero se
-		 * mandar�n los logs
+		 * Hay que crear manejador de fichero para indicar a que fichero se mandaron los logs
 		 */
 		connection = BD.initBD("Usuarios");
 		statement = BD.usarCrearTablasBD(connection);
@@ -89,10 +88,8 @@ public class VentanaLogin extends JFrame {
 		try {
 			fileHandler = new FileHandler("./prueba.log", true);
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -132,35 +129,44 @@ public class VentanaLogin extends JFrame {
 				String nombreUsuario = txtNombreUsuario.getText();
 				String contraseniaUsuario = new String(passwordField.getPassword());
 				if (nombreUsuario.equals("")) {
+					//El textField del usuario se encuentra vacio
 					JOptionPane.showMessageDialog(null, "El campo nombre no puede estar vac�o");
 					logger.log(Level.INFO, "Ha dejado el campo nombre vac�o");
 				} else if (contraseniaUsuario.equals("")) {
+					//El passwordField de la contrasenya se encuentra vacio
 					JOptionPane.showMessageDialog(null, "El campo contrase�a no puede estar vac�o", "ERROR!!",
 							JOptionPane.ERROR_MESSAGE);
 					logger.log(Level.INFO, "Ha dejado el campo contrase�a vac�o");
 				} else {
-					Usuario user = BD.usuarioSelect(statement, nombreUsuario);
+					//Ambos campos se encuentran rellenados
+					Usuario user = BD.usuarioSelect(statement, nombreUsuario); //Creamos un usuario recogiendo los datos de la base de datos teniendo en cuenta el nombre introducido
 					if (user == null) {
+						//Si el usuario no lo encontramos, preguntamos si se desea crear el usuario
 						String resp = JOptionPane.showInputDialog("No est�s registrado. �Quieres registrarte? (S/N)");
 						if (resp.equalsIgnoreCase("S")) {
-							BD.usuariosInsert(statement, nombreUsuario, contraseniaUsuario, 0);
+							//En caso de que la respuesta sea afirmativa, creamos el usuario y lo añadimos a la base de datos. Una vez añadida pasamos a la siguiente ventana.
+							BD.usuariosInsert(statement, nombreUsuario, contraseniaUsuario, 0 , 0);
 							JOptionPane.showMessageDialog(null, "Usuario registrado con �xito", "OK",
 									JOptionPane.INFORMATION_MESSAGE);
-							vaciarCampos();
+							v.dispose();
+							VentanaMenu v = new VentanaMenu(nombreUsuario,65,0,0,0,"", 0);
+							v.main(nombreUsuario,65,0,0,0,"", 0);
 						} else {
+							//En caso de no querer crear un nuevo usuario, se muestra un mensaje y se cierra la aplicacion
 							JOptionPane.showMessageDialog(null, "Hasta otra!!");
+							dispose();
 						}
 					} else {
 						// Usuario existe, Comprobar contraseña
-						if(user.getConstrasenia().equals(contraseniaUsuario))
-						{
+						if(user.getConstrasenia().equals(contraseniaUsuario)){
+							//Si la contrasenya es correcta, abrimos la siguiente ventana
 							JOptionPane.showMessageDialog(null, "BIENVENIDO");
 							v.dispose();
-							VentanaMenu v = new VentanaMenu(nombreUsuario,65,0,0,0,"");
-							v.main(nombreUsuario,65,0,0,0,"");
-
+							VentanaMenu v = new VentanaMenu(nombreUsuario,65,0,0,0,"", 0);
+							v.main(nombreUsuario,65,0,0,0,"", 0);
 						}
 						else {
+							//En caso de que la contrasenya sea incorrecta se muestra un mensaje
 							JOptionPane.showMessageDialog(null, "La contrase�a no es correcta!!");
 							logger.log(Level.SEVERE, "Se ha equivocado en la contrase�a");
 						}
@@ -208,9 +214,8 @@ public class VentanaLogin extends JFrame {
 		lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFecha.setBounds(124, 11, 176, 14);
 		panelCentro.add(lblFecha);
-		long milis = System.currentTimeMillis(); // fecha del sistema
-		DateFormat df = new SimpleDateFormat("d/M/y hh:mm"); // dar formato a la
-		// fecha
+		long milis = System.currentTimeMillis(); // Fecha del sistema
+		DateFormat df = new SimpleDateFormat("d/M/y hh:mm"); // Ponemos el formato que queremos a la fecha
 		Date d = new Date(milis);
 		lblFecha.setText("Fecha: " + df.format(d));
 		
