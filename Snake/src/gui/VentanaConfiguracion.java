@@ -31,9 +31,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JSlider;
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class VentanaConfiguracion extends JFrame {
-
 	/**
 	 * 
 	 */
@@ -41,7 +43,7 @@ public class VentanaConfiguracion extends JFrame {
 	private JFrame frame = new JFrame();
 	private JPanel contentPane;
 	private Object[] dificultad = { "Principiante", "Sencillo", "Media", "Dificil", "Extremo" };
-	private JComboBox comboBox;
+	private JComboBox<Object> comboBox;
 	private JSlider sliderMenu, sliderPartida, sliderEfectos, sliderTodo;
 	private int resultado = 65;
 	private float volumenEfectos;
@@ -84,6 +86,7 @@ public class VentanaConfiguracion extends JFrame {
 		//Inicializacion de la tabla usuarios
 		conUsuarios = BD.initBD("Usuarios");
 		stUsuarios = BD.usarCrearTablasBD(conUsuarios);
+		this.snakeSelected = serpienteSeleccionada;
 		
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaConfiguracion.class.getResource("/recursos/SnakeIcon.png")));
@@ -91,6 +94,171 @@ public class VentanaConfiguracion extends JFrame {
 		VentanaMenu v = new VentanaMenu(usuario, resultado, volumenEAnterior, volumenMAnterior, volumenPAnterior, fondoAnterior, serpienteSeleccionada);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnAdminisitradores = new JMenu("Adminisitradores");
+		menuBar.add(mnAdminisitradores);
+		
+		JMenuItem mntmSerAdministrado = new JMenuItem("Ser Administrador");
+		mntmSerAdministrado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (BD.administradoresSelect(stUsuarios, usuario) == 1) {
+					JOptionPane.showMessageDialog(frame, "Usted ya es un administrador!");
+				} else if (BD.administradoresSelect(stUsuarios, usuario) != 1){
+					int resp = JOptionPane.showConfirmDialog(frame, "¿Desea hacerse administrador? Son 150$");
+					if (resp == 0) {
+						int creditosDisponibles = BD.creditosSelect(stUsuarios, usuario);
+						if (creditosDisponibles >= 150) {
+							String codigo = JOptionPane.showInputDialog(frame, "Introduzca el codigo de verificacion:");
+							if (codigo.equals("AdminProg3")) {
+								BD.administradorUpdate(stUsuarios, usuario, 1);
+								BD.creditosUpdate(stUsuarios, usuario, creditosDisponibles - 150);
+								JOptionPane.showMessageDialog(frame, "Codigo correcto, " + usuario + " ya es un administrador");
+							} else {
+								JOptionPane.showMessageDialog(frame, "Codigo incorrecto");
+							}
+						} else {
+							JOptionPane.showMessageDialog(frame, "No dispone de suficientes creditos");
+						}
+						
+					} 	
+				}
+			}
+		});
+		mnAdminisitradores.add(mntmSerAdministrado);
+		
+		JMenuItem mntmSoyAdministrador = new JMenuItem("Soy Administrador");
+		mntmSoyAdministrador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (BD.administradoresSelect(stUsuarios, usuario) == 1) {
+					VentanaTablaPuntuacionesAdministradores vtpa = new VentanaTablaPuntuacionesAdministradores(usuario); //Se visualiza la ventanaPuntuaciones
+					vtpa.setVisible(true);
+				} else if (BD.administradoresSelect(stUsuarios, usuario) == 0) {
+					int respuesta = JOptionPane.showConfirmDialog(frame, "No es administrador, ¿Desea hacerse administrador?");
+					if (respuesta == 0) {
+						JOptionPane.showMessageDialog(frame, "Dirijase a ser administrador, Gracias!");
+					}
+				}
+			}
+		});
+		mnAdminisitradores.add(mntmSoyAdministrador);
+		
+		JMenu mnPartidas = new JMenu("Partidas");
+		menuBar.add(mnPartidas);
+		
+		JMenuItem mntmPartidasCompletadas = new JMenuItem("Partidas Completadas");
+		mntmPartidasCompletadas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int partidasTerminadas = BD.partidasSelect(stUsuarios, usuario, 0);
+				JOptionPane.showMessageDialog(frame,usuario.toUpperCase()+ "  has completado " + partidasTerminadas + " partidas.");
+			}
+		});
+		mnPartidas.add(mntmPartidasCompletadas);
+		
+		JMenuItem mntmPartidasAbandonadas = new JMenuItem("Partidas Abandonadas");
+		mntmPartidasAbandonadas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int partidasAbandonadas = BD.partidasSelect(stUsuarios, usuario, 1);
+				JOptionPane.showMessageDialog(frame,usuario.toUpperCase() + " has abandonado " + partidasAbandonadas + " partidas");
+			}
+		});
+		mnPartidas.add(mntmPartidasAbandonadas);
+		
+		JMenu mnCreditos = new JMenu("Creditos");
+		menuBar.add(mnCreditos);
+		
+		JMenuItem mntmSumarCreditos = new JMenuItem("Sumar Creditos");
+		mntmSumarCreditos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int creditos = BD.creditosSelect(stUsuarios, usuario);
+				BD.creditosUpdate(stUsuarios, usuario, creditos + 200);
+			}
+		});
+		
+		JMenuItem mntmVisualizarCreditos = new JMenuItem("Visualizar Creditos");
+		mntmVisualizarCreditos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				creditos = BD.creditosSelect(stUsuarios, usuario); //Se obtiene los creditos que estan guardados en la base de datos y se guardan en una nueva variable
+				JOptionPane.showMessageDialog(frame, "Creditos de " + usuario.toUpperCase() + ": " + creditos + "$"); //Se muestra un mensaje informativo con el valor de la variable previamente mend¡cionada
+			}
+		});
+		mnCreditos.add(mntmVisualizarCreditos);
+		
+		JMenuItem mntmDonarCreditos = new JMenuItem("Donar Creditos");
+		mntmDonarCreditos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String beneficiario = JOptionPane.showInputDialog("¿A quien desea donar los creditos?");
+				int existeBeneficiario = BD.usuarioExisteSelect(stUsuarios, beneficiario);
+				if (existeBeneficiario == 1) {
+					String cant = JOptionPane.showInputDialog("¿Cuantos creditos desea donar?");
+					int cantidad = Integer.parseInt(cant);
+					int creditos = BD.creditosSelect(stUsuarios, usuario);
+					int creditosBeneficiario = BD.creditosSelect(stUsuarios, beneficiario);
+					if (creditos >= cantidad) {
+						BD.creditosUpdate(stUsuarios, usuario, creditos - cantidad);
+						BD.creditosUpdate(stUsuarios, beneficiario, creditosBeneficiario + cantidad);
+						JOptionPane.showMessageDialog(frame, "Transaccion completada");
+					} else {
+						JOptionPane.showMessageDialog(frame, "No dispone de tantos creditos");
+					}	
+				} else {
+					JOptionPane.showMessageDialog(frame, "No existe ese usuario");
+				}
+				
+			}
+		});
+		mnCreditos.add(mntmDonarCreditos);
+		mnCreditos.add(mntmSumarCreditos);
+		
+		JMenu mnPuntuaciones = new JMenu("Puntuaciones");
+		menuBar.add(mnPuntuaciones);
+		
+		JMenuItem mntmVisualizarPuntuaciones = new JMenuItem("Visualizar Puntuaciones");
+		mntmVisualizarPuntuaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaTablaPuntuaciones vtp = new VentanaTablaPuntuaciones(usuario); //Se visualiza la ventanaPuntuaciones
+				vtp.setVisible(true);
+			}
+		});
+		mnPuntuaciones.add(mntmVisualizarPuntuaciones);
+		
+		JMenu mnMensajes = new JMenu("Mensajes");
+		menuBar.add(mnMensajes);
+		
+		JMenuItem mntmLeerMensajes = new JMenuItem("Leer Mensajes");
+		mntmLeerMensajes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaMensajes vm = new VentanaMensajes(usuario);
+				vm.setLocationRelativeTo(null);
+				vm.setVisible(true);
+			}
+		});
+		mnMensajes.add(mntmLeerMensajes);
+		
+		JMenuItem mntmEnviarMensajes = new JMenuItem("Enviar Mensajes");
+		mntmEnviarMensajes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String mensaje = JOptionPane.showInputDialog(frame, "Escriba su mensaje aqui:");
+				if (!mensaje.isEmpty()) {
+					String destinatario = JOptionPane.showInputDialog(frame, "¿A quien desea enviarselo?");
+					if (!destinatario.isEmpty()) {
+						int existeBeneficiario = BD.usuarioExisteSelect(stUsuarios, destinatario);
+						if (existeBeneficiario == 1) {
+							BD.mensajesInsert(stUsuarios, destinatario, mensaje, usuario);
+						} else {
+							JOptionPane.showMessageDialog(frame, "No existe ese usuario");
+						}
+					} else {
+						JOptionPane.showMessageDialog(frame, "Destinatario vacio");
+					}
+				} else {
+					JOptionPane.showMessageDialog(frame, "Mensaje vacio");
+				}
+			}
+		});
+		mnMensajes.add(mntmEnviarMensajes);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -116,7 +284,7 @@ public class VentanaConfiguracion extends JFrame {
 		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		//Se crea el JComboBox de eleccion de la dificultad
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Object>();
 		comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		for (int i = 0; i < dificultad.length; i++) {
 			comboBox.addItem(dificultad[i]);
@@ -426,8 +594,9 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton_1.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (creditos >=0){
-				fondo = "../recursos/Fondo.png";
+				int fondoDisponible = BD.fondosSelect(stUsuarios, usuario, 1);
+				if (fondoDisponible == 1) {
+					fondo = "../recursos/Fondo.png";
 				}
 			}
 		});
@@ -438,11 +607,26 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (BD.creditosSelect(stUsuarios, usuario) >= 100) { //Se comprueba la disposicion de creditos
-					fondo = "../recursos/Fondo3.jpg"; //En caso de ser superior se pone el nuevo fondo
-				} else {
-					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 100$");
+				int fondoDisponible = BD.fondosSelect(stUsuarios, usuario, 2);
+				int creditosDisponibles = BD.creditosSelect(stUsuarios, usuario);
+				if (fondoDisponible == 1) {
+					fondo = "../recursos/Fondo3.jpg";
+				} else if (fondoDisponible == 0) {
+					int respuesta = JOptionPane.showConfirmDialog(panelPrincipal, "Son 100$ ¿Desea comprarlo?");
+					if (respuesta == 0) {
+						if (creditosDisponibles >= 100) { //Se comprueba la disposicion de creditos
+							BD.creditosUpdate(stUsuarios, usuario, creditosDisponibles - 100);
+							BD.fondosUpdate(stUsuarios, usuario, 2, 1);
+							fondo = "../recursos/Fondo3.jpg"; //En caso de ser superior se pone el nuevo fondo
+						} else {
+							JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 100$");
+						}
+					} else {
+						fondo = fondoAnterior;
+					}
 				}
+				
+				
 			}
 		});
 		btnNewButton_3.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo3.jpg")));
@@ -453,10 +637,25 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (BD.creditosSelect(stUsuarios, usuario) >= 200) { //Se comprueba la disposicion de creditos
-					fondo = "../recursos/Fondo4.jpg"; //En caso de ser superior se pone el nuevo fondo
-				} else {
-					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 200$");
+				int fondoDisponible = BD.fondosSelect(stUsuarios, usuario, 3);
+				int creditosDisponibles = BD.creditosSelect(stUsuarios, usuario);
+				if (fondoDisponible == 1) {
+					fondo = "../recursos/Fondo4.jpg";
+				} else if (fondoDisponible == 0) {
+					int respuesta = JOptionPane.showConfirmDialog(panelPrincipal, "Son 250$ ¿Desea comprarlo?");
+					if (respuesta == 0) {
+						if (creditosDisponibles >= 250) { //Se comprueba la disposicion de creditos
+							BD.creditosUpdate(stUsuarios, usuario, creditosDisponibles - 250);
+							BD.fondosUpdate(stUsuarios, usuario, 3, 1);
+							fondo = "../recursos/Fondo4.jpg"; //En caso de ser superior se pone el nuevo fondo
+						} else {
+							JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 250$");
+							fondo = fondoAnterior;
+						}
+					} else {
+						fondo = fondoAnterior;
+					}
+					
 				}
 			}
 		});
@@ -468,12 +667,25 @@ public class VentanaConfiguracion extends JFrame {
 		btnNewButton_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (BD.creditosSelect(stUsuarios, usuario) >=400) { //Se comprueba la disposicion de creditos
-					fondo = "../recursos/Fondo2.png"; //En caso de ser superior se pone el nuevo fondo
-				} else {
-					JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 400$");
+				int fondoDisponible = BD.fondosSelect(stUsuarios, usuario, 4);
+				int creditosDisponibles = BD.creditosSelect(stUsuarios, usuario);
+				if (fondoDisponible == 1) {
+					fondo = "../recursos/Fondo2.png";
+				} else if (fondoDisponible == 0) {
+					int respuesta = JOptionPane.showConfirmDialog(panelPrincipal, "Son 400$ ¿Desea comprarlo?");
+					if (respuesta == 0) {
+						if (creditosDisponibles >= 400) { //Se comprueba la disposicion de creditos
+							BD.creditosUpdate(stUsuarios, usuario, creditosDisponibles - 400);
+							BD.fondosUpdate(stUsuarios, usuario, 4, 1);
+							fondo = "../recursos/Fondo2.png"; //En caso de ser superior se pone el nuevo fondo
+						} else {
+							JOptionPane.showMessageDialog(panelPrincipal, "Necesita minimo 400$");
+							fondo = fondoAnterior;
+						}
+					} else {
+						fondo = fondoAnterior;
+					}
 				}
-				
 			}
 		});
 		btnNewButton_2.setIcon(new ImageIcon(VentanaConfiguracion.class.getResource("/recursos/Fondo2.png")));
@@ -517,12 +729,28 @@ public class VentanaConfiguracion extends JFrame {
 		panel.add(panel_11, BorderLayout.CENTER);
 		panel_11.setLayout(null);
 		
+		
 		//Se crea el boton para la visualizacion de los creditos del usuario
-		JButton btn_VerCreditos = new JButton("Creditos");
+		JButton btn_VerCreditos = new JButton("Serpiente Azul");
 		btn_VerCreditos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				creditos = BD.creditosSelect(stUsuarios, usuario); //Se obtiene los creditos que estan guardados en la base de datos y se guardan en una nueva variable
-				JOptionPane.showMessageDialog(panelPrincipal, "Creditos de " + usuario.toUpperCase() + ": " + creditos + "$"); //Se muestra un mensaje informativo con el valor de la variable previamente mend¡cionada
+				if (BD.serpientesSelect(stUsuarios, usuario, 2) == 0) {
+					int i = JOptionPane.showConfirmDialog(panelPrincipal, "¿Desea comprar la serpiente Azul? Son 400$"); //Se pregunta si el usuario desea realizar la compra de la nueva serpiente
+					if (i == 0) { //Si la respuesta es afirmativa 
+						int creditos = BD.creditosSelect(stUsuarios, usuario); //Se obtiene a traves de la base de datos los creditos disponibles del usuario
+						if (creditos >= 400) { //Se comprueba si el usuario dispone de los creditos necesarios
+							BD.serpientesUpdate(stUsuarios, usuario, 1, 2);
+							creditos = creditos - 400; //Se resta el valor de la serpiente a los creditos que tenia el usuario con el que se habia inicializado la aplicacion
+							BD.creditosUpdate(stUsuarios, usuario, creditos); //Se realiza un cambio en la base de datos en el valor de los creditos
+							snakeSelected = 2;
+						} else {
+							JOptionPane.showMessageDialog(panelPrincipal, "No tiene suficientes creditos"); //Se muestra un mensaje informativo
+						}
+					}
+				} else if (BD.serpientesSelect(stUsuarios, usuario, 2) == 1) {
+					//Se cambia el valor de la serpiente seleccionada y por lo tanto se visualizara la serpiente de color Roja
+					snakeSelected = 2;
+				}
 			}
 		});
 		btn_VerCreditos.setBounds(302, 42, 126, 52);
@@ -530,18 +758,30 @@ public class VentanaConfiguracion extends JFrame {
 		
 		
 		//Se crea el boton para la visualizacion de la ventanaPuntuaciones
-		JButton btn_Puntuaciones = new JButton("Puntuaciones");
+		JButton btn_Puntuaciones = new JButton("Serpiente Morada");
 		btn_Puntuaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaTablaPuntuaciones vtp = new VentanaTablaPuntuaciones(usuario); //Se visualiza la ventanaPuntuaciones
-				vtp.setVisible(true);
+				if (BD.serpientesSelect(stUsuarios, usuario, 3) == 0) {
+					int i = JOptionPane.showConfirmDialog(panelPrincipal, "¿Desea comprar la serpiente Rosa? Son 500$" ); //Se pregunta si el usuario desea realizar la compra de la nueva serpiente
+					if (i == 0) { //Si la respuesta es afirmativa 
+						int creditos = BD.creditosSelect(stUsuarios, usuario); //Se obtiene a traves de la base de datos los creditos disponibles del usuario
+						if (creditos >= 500) { //Se comprueba si el usuario dispone de los creditos necesarios
+							BD.serpientesUpdate(stUsuarios, usuario, 1, 3);
+							creditos = creditos - 500; //Se resta el valor de la serpiente a los creditos que tenia el usuario con el que se habia inicializado la aplicacion
+							BD.creditosUpdate(stUsuarios, usuario, creditos); //Se realiza un cambio en la base de datos en el valor de los creditos
+							snakeSelected = 3;
+						} else {
+							JOptionPane.showMessageDialog(panelPrincipal, "No tiene suficientes creditos"); //Se muestra un mensaje informativo
+						}
+					}
+				} else if (BD.serpientesSelect(stUsuarios, usuario, 3) == 1) {
+					//Se cambia el valor de la serpiente seleccionada y por lo tanto se visualizara la serpiente de color Roja
+					snakeSelected = 3;
+				}
 			}
 		});
 		btn_Puntuaciones.setBounds(440, 42, 126, 52);
 		panel_11.add(btn_Puntuaciones);
-		
-		
-		this.snakeSelected = serpienteSeleccionada;
 		
 		//Se crea el boton de seleccion de la serpiente verde
 		JButton btnNewButton_4 = new JButton("Serpiente Verde");
@@ -557,20 +797,20 @@ public class VentanaConfiguracion extends JFrame {
 		JButton button = new JButton("Serpiente Roja");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (BD.serpienteSelect(stUsuarios, usuario) == 0) { //Se comprueba en la base de datos si el usuario dispone de la serpiente Roja
-					int i = JOptionPane.showConfirmDialog(panelPrincipal, "¿Desea comprar la serpiente roja?"); //Se pregunta si el usuario desea realizar la compra de la nueva serpiente
+				if (BD.serpientesSelect(stUsuarios, usuario, 1) == 0) {
+					int i = JOptionPane.showConfirmDialog(panelPrincipal, "¿Desea comprar la serpiente roja? Son 300$"); //Se pregunta si el usuario desea realizar la compra de la nueva serpiente
 					if (i == 0) { //Si la respuesta es afirmativa 
 						int creditos = BD.creditosSelect(stUsuarios, usuario); //Se obtiene a traves de la base de datos los creditos disponibles del usuario
 						if (creditos >= 300) { //Se comprueba si el usuario dispone de los creditos necesarios
-							BD.serpienteUpdate(stUsuarios, usuario, 1); //Se realiza un cambio en la base de datos en el valor de la serpiente
+							BD.serpientesUpdate(stUsuarios, usuario, 1, 1);
 							creditos = creditos - 300; //Se resta el valor de la serpiente a los creditos que tenia el usuario con el que se habia inicializado la aplicacion
 							BD.creditosUpdate(stUsuarios, usuario, creditos); //Se realiza un cambio en la base de datos en el valor de los creditos
-							snakeSelected = 1; //Se cambia el valor de la serpiente seleccionada y por lo tanto se visualizara la serpiente de color Roja
+							snakeSelected = 1;
 						} else {
 							JOptionPane.showMessageDialog(panelPrincipal, "No tiene suficientes creditos"); //Se muestra un mensaje informativo
 						}
 					}
-				} else if (BD.serpienteSelect(stUsuarios, usuario) == 1) {
+				} else if (BD.serpientesSelect(stUsuarios, usuario, 1) == 1) {
 					//Se cambia el valor de la serpiente seleccionada y por lo tanto se visualizara la serpiente de color Roja
 					snakeSelected = 1;
 				}

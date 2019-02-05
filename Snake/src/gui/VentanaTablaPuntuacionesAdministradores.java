@@ -14,10 +14,12 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.EventQueue;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
-public class VentanaTablaPuntuaciones extends JFrame {
+public class VentanaTablaPuntuacionesAdministradores extends JFrame {
 
 
 	/**
@@ -34,9 +36,9 @@ public class VentanaTablaPuntuaciones extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaTablaPuntuaciones frame = new VentanaTablaPuntuaciones(args);
-					frame.setLocationRelativeTo(null);
+					VentanaTablaPuntuacionesAdministradores frame = new VentanaTablaPuntuacionesAdministradores(args);
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -47,7 +49,7 @@ public class VentanaTablaPuntuaciones extends JFrame {
 	
 	
 	
-	public VentanaTablaPuntuaciones(String usuario) {
+	public VentanaTablaPuntuacionesAdministradores(String usuario) {
 		setResizable(false);
 		//Conectamos con la base de datos
 		conUsuarios = BD.initBD("Usuarios");
@@ -94,7 +96,6 @@ public class VentanaTablaPuntuaciones extends JFrame {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 		btnGenerales.setBounds(410, 85, 117, 29);
@@ -114,6 +115,42 @@ public class VentanaTablaPuntuaciones extends JFrame {
 		JLabel lblTiposDePartidas = new JLabel("Tipos de partidas:");
 		lblTiposDePartidas.setBounds(400, 6, 130, 26);
 		getContentPane().add(lblTiposDePartidas);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String usuarioBorrar = JOptionPane.showInputDialog("¿Que puntuaciones desea suprimir? Escriba el nombre del usuario");			
+				BD.puntuacionesTodasDelete(stUsuarios, usuarioBorrar);
+				ResultSet rs = BD.puntuacionesSelect(stUsuarios, null);
+				try {
+					tabla.setModel(buildTableModel(rs)); //Se añade el resultado obtenido en la llamada a funcion previamente realizada
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnEliminar.setBounds(410, 190, 117, 29);
+		getContentPane().add(btnEliminar);
+		
+		JButton btnEliminarLinea = new JButton("Eliminar Linea");
+		btnEliminarLinea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int fila = tabla.getSelectedRow();
+				Object u = tabla.getValueAt(fila, 0);
+				Object punto = tabla.getValueAt(fila, 1);
+				String usuarioBorrar = u + "";
+				int puntos = (Integer) punto;
+				BD.puntuacionUnicaDelete(stUsuarios, usuarioBorrar, puntos);
+				ResultSet rs = BD.puntuacionesSelect(stUsuarios, null);
+				try {
+					tabla.setModel(buildTableModel(rs)); //Se añade el resultado obtenido en la llamada a funcion previamente realizada
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnEliminarLinea.setBounds(410, 149, 117, 29);
+		getContentPane().add(btnEliminarLinea);
 		
 	}
 	

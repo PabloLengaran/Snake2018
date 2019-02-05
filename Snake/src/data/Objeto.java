@@ -12,7 +12,7 @@ public abstract class Objeto {
 	public Objeto() {
 	}
 	
-	public Point getPunto() {
+	public  Point getPunto() {
 		return punto;
 	}
 

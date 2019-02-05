@@ -14,15 +14,13 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import baseDeDatos.BD;
 import data.Platano;
-import data.SerpienteRoja;
+import data.Serpiente;
 import data.Manzana;
 import data.Moneda;
 import data.Musica;
 import data.Obstaculo;
-import data.SerpienteVerde;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
 
@@ -33,8 +31,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1L;
 	private int windowWidth = 800;
 	private int windowHeight = 600;
-	private SerpienteVerde snake;
-	private SerpienteRoja snake1;
+	private Serpiente snake;
 	private Manzana manzana;
 	private Platano platano;
 	private Moneda moneda;
@@ -62,8 +59,9 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private String fondo;
 	private Connection con;
 	private Statement st;
-	private int creditosBD;
 	private int snakeSelected;
+	private int partidasAbandonadas;
+	private int partidasTerminadas;
 
 	public static void main(String args, int tiempoDemora, float volumenE, float volumenM, float volumenP, String fondo, int serpienteSeleccionada) {
 		VentanaJuego v = new VentanaJuego(args, tiempoDemora, volumenE,volumenM,volumenP, fondo, serpienteSeleccionada);
@@ -113,7 +111,6 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			@Override
 			public void mouseMoved(MouseEvent arg0) {
 				String direccionActual = null;
-				if (snakeSelected == 0) {
 					if (snake.getLargo().get(0).x < punteroMouse.x / 20) {
 						snake.direccion("DER");
 						direccionActual = "DER";
@@ -129,32 +126,13 @@ public class VentanaJuego extends JFrame implements KeyListener {
 					} else {
 						snake.direccion(direccionActual);
 					}
-				} else if (snakeSelected == 1) {
-					if (snake1.getLargo().get(0).x < punteroMouse.x / 20) {
-						snake1.direccion("DER");
-						direccionActual = "DER";
-					} else if (snake1.getLargo().get(0).x > punteroMouse.x / 20) {
-						snake1.direccion("IZQ");
-						direccionActual = "IZQ";
-					} else if (snake1.getLargo().get(0).y < punteroMouse.y / 20) {
-						snake1.direccion("ABA");
-						direccionActual = "ABA";
-					} else if (snake1.getLargo().get(0).y > punteroMouse.y / 20) {
-						snake1.direccion("ARR");
-						direccionActual = "ARR";
-					} else {
-						snake1.direccion(direccionActual);
-					}
-				}
 			}
 		});
 	}
 
 	private void inicializoObjetos() {
-		snake = new SerpienteVerde();
+		snake = new Serpiente(snakeSelected);
 		snake.AddPointSerpiente();
-		snake1 = new SerpienteRoja();
-		snake1.AddPointSerpiente();
 		manzana = new Manzana();
 		manzana.newObjeto();
 		platano = new Platano();
@@ -185,16 +163,9 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	}
 
 	private void juego() {
-		if (snakeSelected == 0) {
 			snake.MoveSerpiente();
 			colision();
 			dibujoPantalla();
-		} else if (snakeSelected == 1) {
-			snake1.MoveSerpiente();
-			colision();
-			dibujoPantalla();
-		}
-		
 	}
 
 	private void dibujoPantalla() {
@@ -204,11 +175,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		try {
 			g = bf.getDrawGraphics();
 			g.drawImage(new ImageIcon(VentanaJuego.class.getResource(fondo)).getImage(), 0, 0, windowWidth, windowHeight,null);
-			if (snakeSelected == 0) {
-				snake.dibujoSnake(g);
-			} else if (snakeSelected == 1) {
-				snake1.dibujoSnake(g);
-			}
+			snake.dibujoSnake(g);
 			manzana.dibujaObjeto(g);
 			platano.dibujaObjeto(g);
 			moneda.dibujaObjeto(g);
@@ -234,9 +201,6 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	}
 
 	private void colision() {
-		
-		if (snakeSelected == 0) {	//Comprobamos si la serpiente seleccionada es la serpiente Verde
-			
 			//Caso de la Manzana
 			if (snake.getLargo().get(0).equals(manzana.getPunto())) {
 				manzana.newObjeto();
@@ -280,6 +244,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 					inicializoObjetos();
 					Musica.colision(volumenEfectos);
 				} else if (life == 0){ //Si las vidas restantes son igual a 0:
+					partidasTerminadas = BD.partidasSelect(st, usuario, 0) + 1;
+					BD.partidasUpdate(st, usuario, partidasTerminadas, 0);
 					BD.creditosUpdate(st, usuario, creditos + BD.creditosSelect(st, usuario)); //Se guardan los creditos en la base de datos, donde se suman a los ya obtenidos previamente
 					if (score>0) { //Si la putuacion es mayor de 0: 
 						BD.puntuacionesInsert(st, usuario, score); //Se guarda la puntuacion en la base de datos
@@ -295,6 +261,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 					inicializoObjetos();
 					Musica.colision(volumenEfectos);
 				} else if (life == 0){
+					partidasTerminadas = BD.partidasSelect(st, usuario, 0) + 1;
+					BD.partidasUpdate(st, usuario, partidasTerminadas, 0);
 					BD.creditosUpdate(st, usuario, creditos + BD.creditosSelect(st, usuario));
 					BD.puntuacionesInsert(st, usuario, score);
 					this.dispose();
@@ -309,6 +277,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 						inicializoObjetos();
 						Musica.colision(volumenEfectos);
 					} else if (life == 0){
+						partidasTerminadas = BD.partidasSelect(st, usuario, 0) + 1;
+						BD.partidasUpdate(st, usuario, partidasTerminadas, 0);
 						BD.creditosUpdate(st, usuario, creditos + BD.creditosSelect(st, usuario)); 
 						BD.puntuacionesInsert(st, usuario, score);
 						this.dispose();
@@ -316,87 +286,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 					}
 				}
 			}
-		} else if (snakeSelected == 1) {	//Comprobamos si la serpiente seleccionada es la serpiente Roja
-			//Ocurre lo mismo que en la serpiente Verde
-			if (snake1.getLargo().get(0).equals(manzana.getPunto())) {
-				manzana.newObjeto();
-				snake1.AddPointSerpiente();
-				Musica.sonidoRecompensa(volumenEfectos);
-				contador++;
-				if (contador % 5 != 0) {
-					score += 10;
-				} else if (contador % 5 >= 0) {
-					score += 15;
-				}
-				if (contador % 5 == 0) {
-					life++;
-				}
-			}
 			
-			if (snake1.getLargo().get(0).equals(moneda.getPunto())) {
-				moneda.newObjeto();
-				Musica.sonidoRecompensa(volumenEfectos);
-				creditos += 100;
-			}
-			
-			if (snake1.getLargo().get(0).equals(platano.getPunto())) {
-				platano.newObjeto();
-				Musica.sonidoRecompensa(volumenEfectos);
-				contador++;
-				if (contador % 5 != 0) {
-					score += 5;
-				} else if (contador % 5 >= 0) {
-					score += 10;
-				}
-				if (contador % 5 == 0) {
-					life++;
-				}
-				
-			}
-
-			if (snake1.getLargo().get(0).equals(muro.getPunto()) || snake1.getLargo().get(0).equals(muro2.getPunto()) || snake1.getLargo().get(0).equals(muro3.getPunto()) || snake1.getLargo().get(0).equals(muro4.getPunto()) || snake1.getLargo().get(0).equals(muro5.getPunto())|| snake1.getLargo().get(0).equals(muro6.getPunto())|| snake1.getLargo().get(0).equals(muro7.getPunto())|| snake1.getLargo().get(0).equals(muro8.getPunto())|| snake1.getLargo().get(0).equals(muro9.getPunto())|| snake1.getLargo().get(0).equals(muro10.getPunto())      )  {
-				life--;
-				if (life > 0) {
-					inicializoObjetos();
-					Musica.colision(volumenEfectos);
-				} else if (life == 0){
-					BD.creditosUpdate(st, usuario, creditos + BD.creditosSelect(st, usuario));
-					if (score>0) {
-						BD.puntuacionesInsert(st, usuario, score);
-					}
-					this.dispose();
-					new GameOver(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected).main(usuario,tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected);
-				}
-			}
-
-			if (snake1.getLargo().get(0).x < 0 || snake1.getLargo().get(0).x > 39 || snake1.getLargo().get(0).y < 1 || snake1.getLargo().get(0).y > 29) {
-				life--;
-				if (life > 0) {
-					inicializoObjetos();
-					Musica.colision(volumenEfectos);
-				} else if (life == 0){
-					BD.creditosUpdate(st, usuario, creditos + BD.creditosSelect(st, usuario));
-					BD.puntuacionesInsert(st, usuario, score);
-					this.dispose();
-					new GameOver(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected).main(usuario,tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected);
-				}
-			}
-
-			for (int n = 1; n < snake1.getLargo().size(); n++) {
-				if (snake1 .getLargo().get(0).equals(snake1.getLargo().get(n)) && snake1.getLargo().size() > 2) {
-					life--;
-					if (life > 0) {	
-						inicializoObjetos();
-						Musica.colision(volumenEfectos);
-					} else if (life == 0){
-						BD.creditosUpdate(st, usuario, creditos + BD.creditosSelect(st, usuario)); 
-						BD.puntuacionesInsert(st, usuario, score);
-						this.dispose();
-						new GameOver(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected).main(usuario,tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected);
-					}
-				}
-			}
-		}
+		
 		
 	}
 
@@ -432,7 +323,6 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 
 		int tecla = e.getKeyCode();
-	if (snakeSelected == 0) {	//Comprobamos si la serpiente seleccionada es la serpiente Verde.
 			switch (tecla) {
 			case KeyEvent.VK_UP: //Cuando se pulse la flecha de arriba la direccion de la serpiente sera hacia arriba.
 				snake.direccion("ARR"); //Se utiliza el metodo creado en la clase Snake que especifica cual es la direccion, en este caso hacia arriba.
@@ -449,6 +339,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			case KeyEvent.VK_ESCAPE: //En caso de pulsar la tecla de escape se mostrara un mensaje preguntando si se desea continuar jugando
 				String resp = JOptionPane.showInputDialog("�Est�s seguro de que quieres abandonar la partida? (S/N)"); //Se muestra el panel donde se realiza la pregunta
 				if (resp.equalsIgnoreCase("S")) { //En caso de que la respuesta sea afirmativa
+					partidasAbandonadas = partidasAbandonadas + 1;
+					BD.partidasUpdate(st, usuario, partidasAbandonadas, 1);
 					this.dispose(); //Cerramos la ventana 
 					Musica.stop(1); //Se para la musica
 					VentanaMenu v = new VentanaMenu(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected);
@@ -460,39 +352,6 @@ public class VentanaJuego extends JFrame implements KeyListener {
 				raton();
 				break;
 			}
-		} else if (snakeSelected == 1) {	//Comprobamos si la serpiente seleccionada es la serpiente Roja
-			//Ocurre lo mismo que en la serpiente Verde
-			switch (tecla) {
-			case KeyEvent.VK_UP:
-				snake1.direccion("ARR");
-				break;
-			case KeyEvent.VK_DOWN:
-				snake1.direccion("ABA");
-				break;
-			case KeyEvent.VK_LEFT:
-				snake1.direccion("IZQ");
-				break;
-			case KeyEvent.VK_RIGHT:
-				snake1.direccion("DER");
-				break;
-			case KeyEvent.VK_ESCAPE:
-				String resp = JOptionPane.showInputDialog("�Est�s seguro de que quieres abandonar la partida? (S/N)");
-				if (resp.equalsIgnoreCase("S")) {
-					this.dispose();
-					Musica.stop(1);
-					VentanaMenu v = new VentanaMenu(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected);
-					v.main(usuario, tiempoDemora, volumenEfectos, volumenMenu, volumenPartida, fondo, snakeSelected);
-				} else {
-				}
-				
-				break;
-			case KeyEvent.VK_R:
-				raton();
-				break;
-			}
-		}
-		
-
 	}
 
 	@Override

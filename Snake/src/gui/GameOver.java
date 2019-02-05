@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+
+import baseDeDatos.BD;
 import data.HiloGameOver1;
 import data.HiloGameOver2;
 import data.Musica;
@@ -20,6 +22,7 @@ public class GameOver extends JFrame {
 	private JFrame frame;
 	private JLabel lblGameOver, lbl1, lbl2;
 	private String usuario;
+	
 	
 	
 

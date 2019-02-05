@@ -70,7 +70,6 @@ public class VentanaMenu extends JFrame {
 		this.volumenPartida = volumenP;
 		this.background = imagen;
 		this.selectedSnake = serpienteSeleccionada;
-		
 		initialize();
 	}
 
@@ -93,10 +92,21 @@ public class VentanaMenu extends JFrame {
 				(new Thread() {
 					@Override
 					public void run() {
-						Musica.clickBoton(volumenEfectos);
-						frame.dispose();
-						Musica.stop(6);
-						VentanaJuego.main(usuario, dificultad, volumenEfectos, volumenMenu, volumenPartida, background, selectedSnake);
+						int respuesta = JOptionPane.showConfirmDialog(frame, "¿Desea jugar en modo multi-jugador?");
+						if (respuesta == 1) {
+							Musica.clickBoton(volumenEfectos);
+							frame.dispose();
+							Musica.stop(6);
+							VentanaJuego.main(usuario, dificultad, volumenEfectos, volumenMenu, volumenPartida, background, selectedSnake);
+						} else if (respuesta == 0) {
+							Musica.clickBoton(volumenEfectos);
+							frame.dispose();
+							Musica.stop(6);
+							VentanaJuegoFantasma.main(usuario, dificultad, volumenEfectos, volumenMenu, volumenPartida, background, selectedSnake);
+						} else {
+							
+						}
+						
 					}
 				}).start();
 			}
