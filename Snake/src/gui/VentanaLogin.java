@@ -145,7 +145,7 @@ public class VentanaLogin extends JFrame {
 						String resp = JOptionPane.showInputDialog("No est�s registrado. �Quieres registrarte? (S/N)");
 						if (resp.equalsIgnoreCase("S")) {
 							//En caso de que la respuesta sea afirmativa, creamos el usuario y lo añadimos a la base de datos. Una vez añadida pasamos a la siguiente ventana.
-							BD.usuariosInsert(statement, nombreUsuario, contraseniaUsuario, 0);
+							BD.usuariosInsert(statement, nombreUsuario, contraseniaUsuario, 250);
 							BD.administradoresInsert(statement, nombreUsuario, 0);
 							BD.fondosInsert(statement, nombreUsuario, 1, 0, 0, 0);
 							BD.partidasInsert(statement, nombreUsuario, 0, 0);

@@ -169,14 +169,6 @@ public class VentanaConfiguracion extends JFrame {
 		JMenu mnCreditos = new JMenu("Creditos");
 		menuBar.add(mnCreditos);
 		
-		JMenuItem mntmSumarCreditos = new JMenuItem("Sumar Creditos");
-		mntmSumarCreditos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int creditos = BD.creditosSelect(stUsuarios, usuario);
-				BD.creditosUpdate(stUsuarios, usuario, creditos + 200);
-			}
-		});
-		
 		JMenuItem mntmVisualizarCreditos = new JMenuItem("Visualizar Creditos");
 		mntmVisualizarCreditos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -199,6 +191,7 @@ public class VentanaConfiguracion extends JFrame {
 					if (creditos >= cantidad) {
 						BD.creditosUpdate(stUsuarios, usuario, creditos - cantidad);
 						BD.creditosUpdate(stUsuarios, beneficiario, creditosBeneficiario + cantidad);
+						BD.mensajesInsert(stUsuarios, beneficiario, usuario.toUpperCase() + " te ha mandado "+ cantidad + "$", usuario);
 						JOptionPane.showMessageDialog(frame, "Transaccion completada");
 					} else {
 						JOptionPane.showMessageDialog(frame, "No dispone de tantos creditos");
@@ -210,7 +203,6 @@ public class VentanaConfiguracion extends JFrame {
 			}
 		});
 		mnCreditos.add(mntmDonarCreditos);
-		mnCreditos.add(mntmSumarCreditos);
 		
 		JMenu mnPuntuaciones = new JMenu("Puntuaciones");
 		menuBar.add(mnPuntuaciones);
